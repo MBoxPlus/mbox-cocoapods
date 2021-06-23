@@ -1,0 +1,1 @@
+require 'mbox/cocoapods/adapter/allow_duplicate_pod.rb'

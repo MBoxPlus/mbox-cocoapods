@@ -1,0 +1,1 @@
+require 'mbox/cocoapods/adapter/load_mbox_podfile.rb'

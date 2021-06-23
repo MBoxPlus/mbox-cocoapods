@@ -1,0 +1,1 @@
+require 'mbox/cocoapods/optimization/do_not_update_locked_pod.rb'

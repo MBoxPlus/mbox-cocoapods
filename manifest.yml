@@ -1,0 +1,27 @@
+---
+NAME: MBoxCocoapods
+ALIAS: 
+VERSION: '1.2'
+DEPENDENCIES:
+- MBoxCore
+- MBoxGit
+- MBoxRuby
+- MBoxWorkspace
+- MBoxDependencyManager
+- MBoxContainer
+- MBoxKerberos
+NATIVE_DEPENDENCIES:
+  Core:
+  - MBoxCore
+  - MBoxGit
+  Loader:
+  - MBoxCore
+  - MBoxWorkspace/Core
+CLI: true
+RUBY: true
+MINIMUM_VERSION: 4.12.0
+GROUPS:
+- iOS
+- macOS
+AUTHORS:
+- MBox Team
