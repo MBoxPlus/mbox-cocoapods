@@ -214,15 +214,13 @@ EOF
   class Resolver
     alias_method :mbox_requirement_satisfied_by_0108?, :requirement_satisfied_by?
     def requirement_satisfied_by?(requirement, activated, spec)
-      status = mbox_requirement_satisfied_by_0108?(requirement, activated, spec)
-      if !status
-        repo = MBox::Config.instance.development_repos[Specification.root_name(requirement.name)]
-        if repo
-          UI.warn "Local Repo `#{repo.name}` is in conflict with `#{requirement}`, MBox force use the local development repo."
-          status = true
-        end
+      return true if mbox_requirement_satisfied_by_0108?(requirement, activated, spec)
+      spec_path = MBox::Config.instance.development_pods[Specification.root_name(requirement.name)]
+      if spec_path
+        UI.warn "Local Pod `#{spec_path} (#{spec.version})` is in conflict with `#{requirement}`, MBox force use the local development pod."
+        return true
       end
-      status
+      false
     end
 
     alias_method :mbox_specifications_for_dependency_0108, :specifications_for_dependency

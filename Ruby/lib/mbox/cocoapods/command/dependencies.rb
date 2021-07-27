@@ -71,7 +71,7 @@ module Pod
           {
             :sources => lockfile.pods_by_spec_repo.keys.map { |url| 
               s = source_with_url(url)
-              { s.url => s.repo }
+              { s.url => s.repo } if s
             }.compact,
             :dependencies => dps
           }
@@ -85,7 +85,7 @@ module Pod
           {
             :sources => lockfile.pods_by_spec_repo.keys.map { |url| 
               s = source_with_url(url)
-              { s.url => s.repo }
+              { s.url => s.repo } if s
             }.compact,
             :dependencies => lockfile.mbox_all_dependencies(@names)
           }

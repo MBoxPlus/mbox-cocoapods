@@ -39,7 +39,7 @@ open class MBPodSearchEngine: MBDependencySearchEngine {
         return nil
     }
 
-    public func searchDependency(name: String, version: String?) throws -> (MBConfig.Repo, Date?)? {
+    public func searchDependency(name: String, version: String?, url: String?) throws -> (MBConfig.Repo, Date?)? {
         let repo = MBConfig.Repo(name: name, feature: UI.feature!)
         if let version = version {
             let specPath: String = try UI.log(verbose: "Query podspec with \(repo.name) (\(version)) in sources:", items: self.sources.map { $0.description }) {

@@ -9,7 +9,6 @@ DEPENDENCIES:
 - MBoxWorkspace
 - MBoxDependencyManager
 - MBoxContainer
-- MBoxKerberos
 NATIVE_DEPENDENCIES:
   Core:
   - MBoxCore

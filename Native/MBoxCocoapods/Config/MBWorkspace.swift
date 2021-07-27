@@ -83,8 +83,8 @@ extension MBWorkspace {
         if !self.podlockPath.isExists || !self.podManifestPath.isExists {
             return true
         }
-        let path1 = self.podlockPath.destinationOfSymlink
-        let path2 = self.podManifestPath.destinationOfSymlink
+        let path1 = self.podlockPath.destinationOfSymlink ?? self.podlockPath
+        let path2 = self.podManifestPath.destinationOfSymlink ?? self.podManifestPath
         return !FileManager.default.contentsEqual(atPath: path1, andPath: path2)
     }
 }
