@@ -1,5 +1,6 @@
 
 require "mbox"
+require "mbox-container"
 require "cocoapods"
 require "mbox/cocoapods/version"
 

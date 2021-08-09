@@ -25,14 +25,18 @@
 		AB5E306922EC8BF2004F716F /* Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5E306822EC8BF2004F716F /* Source.swift */; };
 		AB5E307522ECAB5D004F716F /* Specification.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5E307422ECAB5D004F716F /* Specification.swift */; };
 		AB9A5ED823827757000A24BA /* MBSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A5ED723827757000A24BA /* MBSetting.swift */; };
+		ABF0F58B26B94930008ADE91 /* Depend.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF0F58A26B94930008ADE91 /* Depend.swift */; };
 		ABF5669E22E58D3100421916 /* MBoxCocoapods.h in Headers */ = {isa = PBXBuildFile; fileRef = ABF5669C22E58D3100421916 /* MBoxCocoapods.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ABF566BA22E5CC5E00421916 /* Pod.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF566B922E5CC5E00421916 /* Pod.swift */; };
 		ABF566BC22E5CEA600421916 /* MBoxCocoapods.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF566BB22E5CEA600421916 /* MBoxCocoapods.swift */; };
+		EF4068663583FF8440E26894 /* Pods_MBoxCocoapodsLoader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF4859AB9B85D18A0D7C90D7 /* Pods_MBoxCocoapodsLoader.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		10EE914D6374B601E217201D /* Pods-MBoxCocoapodsLoader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MBoxCocoapodsLoader.debug.xcconfig"; path = "Target Support Files/Pods-MBoxCocoapodsLoader/Pods-MBoxCocoapodsLoader.debug.xcconfig"; sourceTree = "<group>"; };
 		25EEC98D24E2D03B00A965A1 /* MBWorkRepo+Container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MBWorkRepo+Container.swift"; sourceTree = "<group>"; };
 		497AAAE95BBD581D78F90238 /* Pods_MBoxCocoapods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MBoxCocoapods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		500F11C7C175F9DC5AF46E4D /* Pods-MBoxCocoapodsLoader.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MBoxCocoapodsLoader.release.xcconfig"; path = "Target Support Files/Pods-MBoxCocoapodsLoader/Pods-MBoxCocoapodsLoader.release.xcconfig"; sourceTree = "<group>"; };
 		5927C48D24E180580015EE1E /* MBFeature+Container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MBFeature+Container.swift"; sourceTree = "<group>"; };
 		5928D42825907DE00070F1A7 /* PodCMD+Container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PodCMD+Container.swift"; sourceTree = "<group>"; };
 		597696D725174992000F57AE /* Switch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Switch.swift; sourceTree = "<group>"; };
@@ -55,6 +59,7 @@
 		AB9A5ED723827757000A24BA /* MBSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MBSetting.swift; sourceTree = "<group>"; };
 		ABA08CE4238D88FF00C5567A /* manifest.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = manifest.yml; path = ../manifest.yml; sourceTree = "<group>"; };
 		ABA08CF0238D8BB000C5567A /* Basic.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Basic.xcconfig; sourceTree = "<group>"; };
+		ABF0F58A26B94930008ADE91 /* Depend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Depend.swift; sourceTree = "<group>"; };
 		ABF5669922E58D3100421916 /* MBoxCocoapods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MBoxCocoapods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABF5669C22E58D3100421916 /* MBoxCocoapods.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MBoxCocoapods.h; sourceTree = "<group>"; };
 		ABF5669D22E58D3100421916 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -62,6 +67,7 @@
 		ABF566AA22E5BAB000421916 /* Podfile.rb */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = text.script.ruby; path = Podfile.rb; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		ABF566B922E5CC5E00421916 /* Pod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pod.swift; sourceTree = "<group>"; };
 		ABF566BB22E5CEA600421916 /* MBoxCocoapods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MBoxCocoapods.swift; sourceTree = "<group>"; };
+		AF4859AB9B85D18A0D7C90D7 /* Pods_MBoxCocoapodsLoader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MBoxCocoapodsLoader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF4068663583FF8440E26894 /* Pods_MBoxCocoapodsLoader.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -201,6 +208,7 @@
 				597696D525174964000F57AE /* Container */,
 				ABF566B922E5CC5E00421916 /* Pod.swift */,
 				AB3DBE9A22E859F600593F79 /* Go.swift */,
+				ABF0F58A26B94930008ADE91 /* Depend.swift */,
 			);
 			path = CLI;
 			sourceTree = "<group>";
@@ -209,6 +217,7 @@
 			isa = PBXGroup;
 			children = (
 				497AAAE95BBD581D78F90238 /* Pods_MBoxCocoapods.framework */,
+				AF4859AB9B85D18A0D7C90D7 /* Pods_MBoxCocoapodsLoader.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -220,6 +229,8 @@
 				ABF566A922E5BAAF00421916 /* MBoxCocoapods.podspec */,
 				65B83D847BEDC1332C66E966 /* Pods-MBoxCocoapods.debug.xcconfig */,
 				882E435C2AA7779C203650F6 /* Pods-MBoxCocoapods.release.xcconfig */,
+				10EE914D6374B601E217201D /* Pods-MBoxCocoapodsLoader.debug.xcconfig */,
+				500F11C7C175F9DC5AF46E4D /* Pods-MBoxCocoapodsLoader.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -250,6 +261,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AB07111B25E7D29E007294A5 /* Build configuration list for PBXNativeTarget "MBoxCocoapodsLoader" */;
 			buildPhases = (
+				B400DDB84FC3D791088CC2EB /* [CP] Check Pods Manifest.lock */,
 				AB07110F25E7D29E007294A5 /* Headers */,
 				AB07111025E7D29E007294A5 /* Sources */,
 				AB07111125E7D29E007294A5 /* Frameworks */,
@@ -272,7 +284,6 @@
 				ABF5669422E58D3100421916 /* Headers */,
 				ABF5669522E58D3100421916 /* Sources */,
 				ABF5669622E58D3100421916 /* Frameworks */,
-				AB6293C823006CE700F95DB8 /* Package Dylibs */,
 			);
 			buildRules = (
 			);
@@ -289,7 +300,7 @@
 		ABF5669022E58D3100421916 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1300;
+				LastUpgradeCheck = 1250;
 				ORGANIZATIONNAME = com.bytedance;
 				TargetAttributes = {
 					AB07111325E7D29E007294A5 = {
@@ -353,25 +364,26 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		AB6293C823006CE700F95DB8 /* Package Dylibs */ = {
+		B400DDB84FC3D791088CC2EB /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
+			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"$(PODS_ROOT)/MBoxCore/repackage-dylibs.input.xcfilelist",
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
-			name = "Package Dylibs";
+			name = "[CP] Check Pods Manifest.lock";
 			outputFileListPaths = (
-				"$(PODS_ROOT)/MBoxCore/repackage-dylibs.output.xcfilelist",
 			);
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MBoxCocoapodsLoader-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = "/bin/sh -li";
-			shellScript = "export LANG=en_US.UTF-8\nexport LANGUAGE=en_US.UTF-8\nexport LC_ALL=en_US.UTF-8\ncd \"${SRCROOT}/../..\"\nbundle exec ruby \"${PODS_ROOT}/MBoxCore/repackage-dylibs.rb\"\n";
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -393,6 +405,7 @@
 				AB5E306322EC885C004F716F /* Metadata.swift in Sources */,
 				597696D825174992000F57AE /* Switch.swift in Sources */,
 				597696DF25174A30000F57AE /* Start.swift in Sources */,
+				ABF0F58B26B94930008ADE91 /* Depend.swift in Sources */,
 				AB5E307522ECAB5D004F716F /* Specification.swift in Sources */,
 				ABF566BA22E5CC5E00421916 /* Pod.swift in Sources */,
 				5928D42925907DE10070F1A7 /* PodCMD+Container.swift in Sources */,
@@ -414,7 +427,9 @@
 /* Begin XCBuildConfiguration section */
 		AB07111925E7D29E007294A5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 10EE914D6374B601E217201D /* Pods-MBoxCocoapodsLoader.debug.xcconfig */;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
@@ -422,23 +437,24 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = MBoxCocoapodsLoader/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				INSTALL_PATH = "$(inherited)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mbox.MBoxCocoapodsLoader;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = "$(inherited)";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
 		AB07111A25E7D29E007294A5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 500F11C7C175F9DC5AF46E4D /* Pods-MBoxCocoapodsLoader.release.xcconfig */;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
@@ -446,16 +462,15 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = MBoxCocoapodsLoader/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				INSTALL_PATH = "$(inherited)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mbox.MBoxCocoapodsLoader;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = "$(inherited)";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;

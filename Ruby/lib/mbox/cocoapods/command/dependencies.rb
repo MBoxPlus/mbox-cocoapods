@@ -32,7 +32,21 @@ module Pod
         end
 
         def search_dependencies
-          dependencies_in_lockfile || dependencies_in_podfile || dependencies_in_workspace_lockfile
+          dps = dependencies_in_lockfile || dependencies_in_podfile
+          if dps && dps[:dependencies].all? { |_, value| !value.blank? }
+            return dps
+          end
+          dps2 = dependencies_in_workspace_lockfile
+          return dps2 if dps.blank?
+          dps[:dependencies].each do |name, value|
+            v2 = dps2[:dependencies][name]
+            next if v2.blank?
+            next if value.any? { |k, v|
+              v2[k] != v
+            }
+            dps[:dependencies][name] = v2
+          end
+          dps
         end
 
         def generate_dependencies
@@ -56,7 +70,7 @@ module Pod
           {
             :sources => podfile.sources.map { |url| 
               s = source_with_url(url)
-              { s.url => s.repo }
+              s ? { s.url => s.repo } : { url => nil }
             }.compact,
             :dependencies => podfile.mbox_all_dependencies(@names)
           }
@@ -71,7 +85,7 @@ module Pod
           {
             :sources => lockfile.pods_by_spec_repo.keys.map { |url| 
               s = source_with_url(url)
-              { s.url => s.repo } if s
+              s ? { s.url => s.repo } : { url => nil }
             }.compact,
             :dependencies => dps
           }
@@ -85,7 +99,7 @@ module Pod
           {
             :sources => lockfile.pods_by_spec_repo.keys.map { |url| 
               s = source_with_url(url)
-              { s.url => s.repo } if s
+              s ? { s.url => s.repo } : { url => nil }
             }.compact,
             :dependencies => lockfile.mbox_all_dependencies(@names)
           }

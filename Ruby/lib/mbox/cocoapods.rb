@@ -19,7 +19,7 @@ require "mbox/cocoapods/bugfix/reject_copy_resource_for_static_framework.rb"
 ############################## Adapter ##############################
 require "mbox/cocoapods/adapter/save_user_projects.rb"
 require "mbox/cocoapods/adapter/disable_development_pods.rb"
-# require "mbox/cocoapods/adapter/link_development_pods.rb"
+require "mbox/cocoapods/adapter/link_development_pods.rb"
 require "mbox/cocoapods/adapter/load_mbox_podfile.rb"
 require "mbox/cocoapods/adapter/write_mbox_lockfile.rb"
 require "mbox/cocoapods/adapter/shadow_sandbox.rb"
@@ -39,6 +39,9 @@ require "mbox/cocoapods/adapter/all_dependencies.rb"
 
 require "mbox/cocoapods/adapter/command/lib/lint.rb"
 
+require "mbox/cocoapods/adapter/dependency_change/resolver.rb"
+require "mbox/cocoapods/adapter/dependency_change/analyzer.rb"
+require "mbox/cocoapods/adapter/dependency_change/lockfile.rb"
 ############################## Optimization ##############################
 require "mbox/cocoapods/optimization/list_all_podspecs.rb"
 require "mbox/cocoapods/optimization/do_not_update_locked_pod.rb"

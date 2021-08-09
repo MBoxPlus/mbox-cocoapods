@@ -28,7 +28,19 @@ open class PodCMD: BundlerCMD {
 
     dynamic
     open override func setupEnvironment(_ base: [String: String]? = nil) -> [String: String] {
-        return super.setupEnvironment(base)
+        let env = super.setupEnvironment(base)
+
+        let packageNames = workspace.config.currentFeature.repos.flatMap(\.packageNames)
+        let dps = workspace.config.currentFeature.dependencies.array.filter {
+            ($0.mode == .local || $0.mode == .remote || $0.mode == .version) &&
+                !packageNames.contains($0.name!)
+        }.map { dp -> (String, [String: Any]) in
+            var hash = dp.toCodableObject() as! [String: Any]
+            let name = hash.removeValue(forKey: "name")! as! String
+            return (name, hash)
+        }
+        if dps.isEmpty { return env }
+        return env.merging(["MBOX_COCOAPODS_DEPENDENCIES": Dictionary(uniqueKeysWithValues: dps).toJSONString(pretty: false)!], uniquingKeysWith: { $1 })
     }
 
     open override func exec(_ string: String, workingDirectory: String? = nil, env: [String : String]? = nil) -> Int32 {

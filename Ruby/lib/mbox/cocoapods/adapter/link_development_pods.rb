@@ -18,7 +18,7 @@ module Pod
                         pod_target.user_targets.each do |dependency_target|
                             case dependency_target.symbol_type
                             when :framework
-                                ld_flags << '-framework' << %("#{dependency_target.product_name}")
+                                ld_flags << '-framework' << %("#{dependency_target.link_product_name}")
                             when :dynamic_library, :static_library
                                 ld_flags << %(-l"#{dependency_target.link_product_name}")
                             end

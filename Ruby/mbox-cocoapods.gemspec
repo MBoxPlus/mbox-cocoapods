@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{MBox cocoapods plugin.}
   spec.description   = %q{Hook Cocoapods to support mbox.}
-  spec.homepage      = "https://github.com/MBoxSpace/mbox-cocoapods.git"
+  spec.homepage      = "https://github.com/MBoxPlus/mbox-cocoapods.git"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'

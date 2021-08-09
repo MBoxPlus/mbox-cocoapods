@@ -7,8 +7,12 @@ module Pod
                 return [] if user_project.nil?
 
                 library_specs.map do |spec|
-                    target_name = spec.name.split('/').last
-                    user_project.native_targets.find { |target| target.name == target_name }
+                    names = spec.name.split('/')
+                    user_project.native_targets.find { |target|
+                        target.name == names.last ||
+                        target.name == names.join ||
+                        target.name == names.join("-")
+                    }
                 end.compact
             end
         end
