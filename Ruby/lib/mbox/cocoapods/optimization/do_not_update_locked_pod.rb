@@ -15,13 +15,14 @@ module Pod
         mbox_run_1108
       end
     end
-    class Install < Command
-      alias_method :mbox_run_1108, :run
+
+    module Install_MBoxDoNotUpdateLockedPod
       def run
         config.update_mode = nil
-        mbox_run_1108
+        super
       end
     end
+    Install.prepend(Install_MBoxDoNotUpdateLockedPod)
   end
 
   class Resolver

@@ -33,13 +33,8 @@ module Pod
     def self.from_mbox
 
       current_feature = ::MBox::Config.instance.current_feature
-      mbox_repos =
-          if current_feature.current_container_names.blank?
-            current_feature.repos
-          else
-            UI.puts "[MBox] Integrate containers: #{current_feature.current_container_names.to_sentence}"
-            current_feature.current_container_repos
-          end || []
+      mbox_repos = current_feature.current_cocoapods_container_repos
+      UI.message "[MBox] Integrate containers: #{mbox_repos.map(&:name).to_sentence}"
 
       Podfile.new(MBox::Config::Repo.podfile_path) do
         @sub_files = {}

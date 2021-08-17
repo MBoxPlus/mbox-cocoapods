@@ -8,6 +8,7 @@ require "mbox/cocoapods/version"
 require 'mbox/claide/command.rb'
 ######################## MBox hook ########################
 require "mbox/mbox/config/config.rb"
+require "mbox/mbox/config/feature.rb"
 require "mbox/mbox/config/repo.rb"
 ######################## CocoaPods hook ########################
 require "mbox/cocoapods.rb"

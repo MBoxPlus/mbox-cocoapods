@@ -2,8 +2,36 @@
 require_relative "dependency"
 
 module Pod
+  class Podfile
+    class TargetDefinition
+      public :get_hash_value
+    end
+  end
+
   class Installer
     class Analyzer
+      alias mbox_initialize_520 initialize
+      def initialize(sandbox, podfile, lockfile = nil, plugin_sources = nil, has_dependencies = true,
+                     pods_to_update = false)
+        inject_podfile_requirements(podfile)
+        mbox_initialize_520(sandbox, podfile, lockfile, plugin_sources, has_dependencies, pods_to_update)
+      end
+
+      def inject_podfile_requirements(podfile)
+        podfile.target_definition_list.each do |target|
+          pods = target.get_hash_value('dependencies') || []
+          pods.each do |name_or_hash|
+            next unless name_or_hash.is_a?(Hash)
+            name = name_or_hash.keys.first
+            old_dep = name_or_hash.values.first
+            if dep = ::MBox::Dependency.all[Specification.root_name(name)]
+              name_or_hash[name] = [dep.to_dependency.requirement.to_s]
+              UI.message "[MBox] Podfile Redirect `#{name}` #{old_dep} -> #{name_or_hash[name]}"
+            end
+          end
+        end
+      end
+
       alias_method :mbox_generate_podfile_state_0520, :generate_podfile_state
       def generate_podfile_state
         result = mbox_generate_podfile_state_0520

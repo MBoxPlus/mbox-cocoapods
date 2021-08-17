@@ -26,12 +26,7 @@ module Pod
       lockfile.defined_in_file = path
 
       current_feature = ::MBox::Config.instance.current_feature
-      mbox_repos =
-          if current_feature.current_container_names.blank?
-            current_feature.repos
-          else
-            current_feature.current_container_repos
-          end || []
+      mbox_repos = current_feature.current_cocoapods_container_repos
 
       mbox_repos.each do |repo|
         next if repo.podlock_path.nil? || !repo.podlock_path.exist?
@@ -79,12 +74,7 @@ module Pod
         checkout_options = sandbox.checkout_sources.select { |root_name, _| external_source_pods.include? root_name }
 
         current_feature = ::MBox::Config.instance.current_feature
-        mbox_repos =
-            if current_feature.current_container_names.blank?
-              current_feature.repos
-            else
-              current_feature.current_container_repos
-            end || []
+        mbox_repos = current_feature.current_cocoapods_container_repos
 
         mbox_repos.each do |repo|
           next if repo.podfile_path.blank? || repo.podlock_path.blank?
