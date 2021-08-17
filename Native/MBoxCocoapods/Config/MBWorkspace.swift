@@ -58,6 +58,13 @@ extension MBWorkspace {
         return self.rootPath.appending(pathComponent: self.rootPath.lastPathComponent.appending(pathExtension: "xcworkspace"))
     }
 
+    public var xcodeprojPath: String {
+        if let filename = try? FileManager.default.contentsOfDirectory(atPath: self.rootPath).first(where: { $0.ends(with: ".xcodeproj", caseSensitive: false) }) {
+            return self.rootPath.appending(pathComponent: filename)
+        }
+        return self.rootPath.appending(pathComponent: self.rootPath.lastPathComponent.appending(pathExtension: "xcodeproj"))
+    }
+
     public var podfilePath: String {
         return self.rootPath.appending(pathComponent: "Podfile")
     }
