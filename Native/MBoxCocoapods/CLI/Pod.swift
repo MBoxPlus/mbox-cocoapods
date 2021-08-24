@@ -8,9 +8,8 @@
 
 import Foundation
 import MBoxCore
-import MBoxWorkspaceCore
+import MBoxContainer
 import MBoxRuby
-import MBoxKerberos
 
 extension MBCommander {
     open class Pod: Bundle {

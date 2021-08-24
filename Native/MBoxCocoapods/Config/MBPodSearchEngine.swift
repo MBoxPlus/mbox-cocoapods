@@ -39,32 +39,37 @@ open class MBPodSearchEngine: MBDependencySearchEngine {
         return nil
     }
 
-    public func searchDependency(name: String, version: String?, url: String?) throws -> (MBConfig.Repo, Date?)? {
-        let repo = MBConfig.Repo(name: name, feature: UI.feature!)
+    dynamic
+    public func getCurrentDependenciesInSameRepo(by dependency: Dependency) -> [Dependency] {
+        return []
+    }
+
+    public func resolveDependency(name: String, version: String?, url: String?) throws -> Dependency? {
+        let dep = Dependency()
         if let version = version {
-            let specPath: String = try UI.log(verbose: "Query podspec with \(repo.name) (\(version)) in sources:", items: self.sources.map { $0.description }) {
-                guard let specPath = try Source.specifationPath(name: repo.name, version: version, sources: self.sources) else {
-                    throw RuntimeError("Could not find the podspec `\(repo.name) (\(version))`.\nThe cocoapods spec repo maybe outdated. Please try to run `mbox pod repo update` first.")
+            let specPath: String = try UI.log(verbose: "Query podspec with \(name) (\(version)) in sources:", items: self.sources.map { $0.description }) {
+                guard let specPath = try Source.specifationPath(name: name, version: version, sources: self.sources) else {
+                    throw RuntimeError("Could not find the podspec `\(name) (\(version))`.\nThe cocoapods spec repo maybe outdated. Please try to run `mbox pod repo update` first.")
                 }
                 return specPath
             }
             let info = try source(for: specPath)
-            repo.name = info.name
-            repo.url = info.url
-            repo.baseGitPointer = info.git
+            dep.name = info.name
+            dep.git = info.url
+            dep.gitPointer = info.git
         } else {
             UI.log(verbose: "Could not find the dependency `\(name)` from CocoaPods Dependencies, MBox will search it from global environment.")
-            let specPath: String = try UI.log(verbose: "Query lastest podspec with `\(repo.name)` in sources:", items: self.sources.map({ $0.description })) {
-                guard let specPath = try Source.specifationPath(name: repo.name, sources: self.sources) else {
-                    throw RuntimeError("Could not find the podspec `\(repo.name)`.\nThe cocoapods spec repo maybe outdated. Please try to run `mbox pod repo update` first.")
+            let specPath: String = try UI.log(verbose: "Query lastest podspec with `\(name)` in sources:", items: self.sources.map({ $0.description })) {
+                guard let specPath = try Source.specifationPath(name: name, sources: self.sources) else {
+                    throw RuntimeError("Could not find the podspec `\(name)`.\nThe cocoapods spec repo maybe outdated. Please try to run `mbox pod repo update` first.")
                 }
                 return specPath
             }
             let info = try source(for: specPath)
-            repo.name = info.name
-            repo.url = info.url
+            dep.name = info.name
+            dep.git = info.url
         }
-        return (repo, nil)
+        return dep
     }
 
     init(workspace: MBWorkspace) {

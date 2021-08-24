@@ -42,5 +42,12 @@ extension MBConfig.Feature {
         }
         return nil
     }
-    
+
+    @_dynamicReplacement(for: syncContainerTools)
+    public class var cocoapods_syncContainerTools: [[MBDependencyTool]] {
+        var tools = self.syncContainerTools
+        tools.append([.CocoaPods, .Bundler])
+        return tools
+    }
+
 }
