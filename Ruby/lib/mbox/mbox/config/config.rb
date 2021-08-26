@@ -1,7 +1,6 @@
 
 module Xcodeproj
     class Project
-        # 项目名
         def name
             @name ||= path.basename(".*").to_s
         end
@@ -26,7 +25,7 @@ module MBox
             }
         end
 
-        # 所有开发中的 pod，返回 {pod_name: repo}
+        # {pod_name: repo}
         def development_repos
             @development_repos ||= begin
                 hash = current_feature.repos.map { |repo| [repo.pod_name, repo] }.to_h

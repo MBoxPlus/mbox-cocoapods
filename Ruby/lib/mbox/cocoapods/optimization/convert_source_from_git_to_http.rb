@@ -1,6 +1,6 @@
 require 'cocoapods-downloader/http'
 
-# 替换 Git 地址为 HTTPS 地址
+# Replace git url to http url
 
 module Pod
   module Downloader
@@ -22,7 +22,7 @@ module Pod
         def check_status(target, param)
           gitattr_file = File.join target, '.gitattributes'
           if File.exist?(gitattr_file)
-            # 包含 lfs 文件
+            # Check use lfs
             if File.read(gitattr_file).include?('lfs')
               UI.puts "GitLabToken Downloader do not support `git-lfs`, fallback!"
               raise DownloaderError, "GitLabToken Downloader do not support `git-lfs`, download failed!"
@@ -33,7 +33,7 @@ module Pod
         HOST_TOKEN = {}
         LOCAL_IPS = []
 
-        # 检测域名是否是本地网络
+        # Check the host is local domain
         def check_host_is_localnet(host)
           info = `ping -c 1 -t 1 "#{host}" | head -1`
           if info =~ /.+\(([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)\).+/
@@ -64,20 +64,13 @@ module Pod
           return v
         end
 
-        # 注入 Gitlab 身份认证 token
+        # Inject Gitlab Token
         def inject_token(host, url)
           key = host.gsub(".", "_").upcase
           token_type = nil
           unless HOST_TOKEN.has_key?(key)
-            if check_host_is_localnet(host)
-              # 本地网络服务器必须使用 token 验证
-              token_type = "PRIVATE_TOKEN" if env("#{key}_PRIVATE_TOKEN")
-              token_type = "ACCESS_TOKEN" if env("#{key}_ACCESS_TOKEN")
-            else
-              # 外部服务器根据 ENV 判断是否需要验证
-              token_type = "PRIVATE_TOKEN" if env("#{key}_PRIVATE_TOKEN")
-              token_type = "ACCESS_TOKEN" if env("#{key}_ACCESS_TOKEN")
-            end
+            token_type = "PRIVATE_TOKEN" if env("#{key}_PRIVATE_TOKEN")
+            token_type = "ACCESS_TOKEN" if env("#{key}_ACCESS_TOKEN")
             HOST_TOKEN[key] = token_type
           else
             token_type = HOST_TOKEN[key]
@@ -87,14 +80,11 @@ module Pod
             if env(token_key)
               url << "?" if url.index("?").nil?
               url << "&#{token_type.downcase}=#{ENV[token_key]}"
-              # 需要注入 token 且注入成功
               return true
             else
-              # 需要注入 token 但是注入失败
               return false
             end
           end
-          # 不需要注入 Token，可以直接转 http
           false
         end
 
@@ -116,15 +106,15 @@ module Pod
             end
             http = ""
             if host == "github.com"
-              # Github 路径
+              # Github Style
               http = "https://codeload.github.com/#{group}/#{name}/zip/#{ref}"
               hash[:type] = "zip"
               hash[:flatten] = true
             elsif host =~ /.*\.googlesource\.com/
-              # Google Source 路径
+              # Google Source Style
               http = "#{git}/+archive/#{ref}.tar.gz"
             else
-              # gitlab 模式路径
+              # Gitlab Style
               url = "https://#{host}/#{group}/#{name}/repository/archive.zip?ref=#{ref}"
               return unless inject_token(host, url)
               http = url

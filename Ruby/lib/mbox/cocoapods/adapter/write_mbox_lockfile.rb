@@ -66,7 +66,6 @@ module Pod
 
   class Installer
     module MBoxLockFile
-      # 为每个独立项目的 Podfile.lock 更新一遍，方便提交更新的依赖
       def write_lockfiles
         super
         return unless config.write_independent_lockfile

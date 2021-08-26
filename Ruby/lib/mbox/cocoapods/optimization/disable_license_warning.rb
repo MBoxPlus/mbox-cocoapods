@@ -2,7 +2,7 @@
 module Pod
   module Generator
     class Acknowledgements
-      # 覆盖原生方法
+      # Replace origin method
       alias_method :mbox_license_text_0709, :license_text
       def license_text(spec)
         return nil unless spec.license

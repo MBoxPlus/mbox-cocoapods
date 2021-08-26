@@ -2,7 +2,7 @@
 //  MBSetting.swift
 //  MBoxCocoapods
 //
-//  Created by 詹迟晶 on 2019/11/18.
+//  Created by Whirlwind on 2019/11/18.
 //  Copyright © 2019 com.bytedance. All rights reserved.
 //
 

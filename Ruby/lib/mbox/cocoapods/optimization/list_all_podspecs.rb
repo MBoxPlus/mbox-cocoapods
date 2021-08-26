@@ -1,5 +1,5 @@
 
-# 列出所有用到的 podspec，生成 sublime project 文件，方便查看
+# List all podspecs, generate a sublime project
 module Pod
   class Installer
     class Analyzer

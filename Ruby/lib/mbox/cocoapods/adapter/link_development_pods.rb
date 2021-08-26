@@ -75,7 +75,6 @@ module Pod
     #             alias_method :pod_generate!, :generate!
     #             def generate!
     #                 pod_generate!
-    #                 # 向 Pods 下面的 Pods-xxxx.a 添加编译依赖，让 Xcode 能够分析出编译顺序
     #                 frameworks_group = project.frameworks_group
     #                 aggregate_target_installation_results_hash = @target_installation_results.aggregate_target_installation_results
     #                 aggregate_target_installation_results_hash.values.each do |aggregate_target_installation_result|

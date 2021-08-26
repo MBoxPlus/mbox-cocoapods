@@ -2,7 +2,7 @@
 //  MBoxCocoapodsLoader.h
 //  MBoxCocoapodsLoader
 //
-//  Created by 詹迟晶 on 2021/2/25.
+//  Created by Whirlwind on 2021/2/25.
 //  Copyright © 2021 com.bytedance. All rights reserved.
 //
 

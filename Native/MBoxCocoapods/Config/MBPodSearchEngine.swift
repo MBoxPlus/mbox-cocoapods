@@ -2,7 +2,7 @@
 //  MBPodSearchEngine.swift
 //  MBoxCocoapods
 //
-//  Created by 詹迟晶 on 2020/4/15.
+//  Created by Whirlwind on 2020/4/15.
 //  Copyright © 2020 com.bytedance. All rights reserved.
 //
 
@@ -95,7 +95,6 @@ open class MBPodSearchEngine: MBDependencySearchEngine {
         if path.pathExtension == "json" {
             content = try String(contentsOfFile: path)
         } else {
-            // TTY 模式不支持 error 通道，为了避免 Error 通道的信息干扰，不使用 TTY
             let pod = PodCMD(workingDirectory: self.workspace.rootPath, useTTY: false)
             guard pod.exec("ipc spec '\(path)'") else {
                 throw RuntimeError("Convert podspec to json failed: `\(path)`")

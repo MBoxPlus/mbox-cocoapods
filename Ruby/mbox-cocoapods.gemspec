@@ -6,7 +6,7 @@ require "mbox/cocoapods/version"
 Gem::Specification.new do |spec|
   spec.name          = "mbox-cocoapods"
   spec.version       = MBox::Cocoapods::VERSION
-  spec.authors       = ["詹迟晶"]
+  spec.authors       = ["WhirlwindJames"]
   spec.email         = ["james.zhan@bytedance.com"]
 
   spec.summary       = %q{MBox cocoapods plugin.}

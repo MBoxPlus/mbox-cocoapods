@@ -1,7 +1,6 @@
 
 module Pod
     class PodTarget < Target
-        # 该 Pod Target 可能是一个 Development 状态，需要映射到主项目的 Target
         def user_targets
             @user_targets ||= begin
                 return [] if user_project.nil?
@@ -31,7 +30,6 @@ module Pod
 
         alias_method :ori_should_build?, :should_build?
         def should_build?
-            # Development Pods 不需要 build
             return false if development?
             ori_should_build?
         end
@@ -44,7 +42,6 @@ module Pod
     #                 alias :ori_generate_other_ld_flags :generate_other_ld_flags
     #             end
     #             def self.generate_other_ld_flags(aggregate_target, pod_targets, xcconfig)
-    #                 # SDK 不需要 link
     #                 return if aggregate_target and aggregate_target.library?
     #                 ori_generate_other_ld_flags(aggregate_target, pod_targets, xcconfig)
     #             end
