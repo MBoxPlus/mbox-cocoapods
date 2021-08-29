@@ -109,13 +109,19 @@ module MBox
 
       def search_project
         return nil unless working_path.exist?
-        name = setting_for_key("xcodeproj")
-        if name.blank?
-          Dir.chdir(working_path) do
-            name = Dir["*.xcodeproj"].reject{ |name| name == "_Pods.xcodeproj" }.first
+        xcodeproj = setting_for_key("xcodeproj")
+        return working_path.join(xcodeproj) if xcodeproj
+        if podfile_path
+          Dir.chdir(podfile_path.dirname) do
+            xcodeproj = Dir["*.xcodeproj"].reject{ |name| name == "_Pods.xcodeproj" }.first
           end
+          return podfile_path.dirname.join(xcodeproj) if xcodeproj
         end
-        name ? working_path.join(name) : nil
+        Dir.chdir(working_path) do
+          xcodeproj = Dir["*.xcodeproj"].reject{ |name| name == "_Pods.xcodeproj" }.first
+        end
+        return working_path.join(name) if xcodeproj
+        nil
       end
 
       public
