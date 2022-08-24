@@ -3,16 +3,9 @@ module Pod
     class PodTarget < Target
         def user_targets
             @user_targets ||= begin
-                return [] if user_project.nil?
-
                 library_specs.map do |spec|
-                    names = spec.name.split('/')
-                    user_project.native_targets.find { |target|
-                        target.name == names.last ||
-                        target.name == names.join ||
-                        target.name == names.join("-")
-                    }
-                end.compact
+                    MBox::Config.instance.user_targets(spec.name)&.last
+                end.compact.flatten.uniq
             end
         end
 

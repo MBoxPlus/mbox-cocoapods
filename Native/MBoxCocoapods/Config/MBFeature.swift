@@ -7,13 +7,12 @@
 //
 
 import MBoxCore
-import MBoxWorkspaceCore
 import MBoxContainer
 import MBoxDependencyManager
 
 extension MBConfig.Feature {
     @_dynamicReplacement(for: supportFiles)
-    open var cocoaPodsSupportFiles: [String] {
+    public var cocoaPodsSupportFiles: [String] {
         var files = supportFiles + ["Podfile", "Podfile.lock"]
         if let xcworkspace = cocoaPodsXcworkspaceFile {
             files.append(xcworkspace)
@@ -22,7 +21,7 @@ extension MBConfig.Feature {
     }
     
     @_dynamicReplacement(for: allContainerFiles(platformTool:))
-    open func cocoaPodsContainerFiles(platformTool: MBDependencyTool) ->[String] {
+    public func cocoaPodsContainerFiles(platformTool: MBDependencyTool) ->[String] {
         var files = allContainerFiles(platformTool: platformTool)
         if platformTool != .CocoaPods {
             return files

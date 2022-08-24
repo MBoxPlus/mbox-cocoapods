@@ -4,17 +4,17 @@ module Pod
   end
 
   class Command
-    class Update < Command
-      alias_method :mbox_run_1108, :run
+    module Update_MBoxDoNotUpdateLockedPod
       def run
         if @pods
           config.update_mode = @pods
         else
           config.update_mode = :all
         end
-        mbox_run_1108
+        super
       end
     end
+    Update.prepend(Update_MBoxDoNotUpdateLockedPod)
 
     module Install_MBoxDoNotUpdateLockedPod
       def run
@@ -31,6 +31,7 @@ module Pod
     alias_method :mbox_specifications_for_dependency_1108, :specifications_for_dependency
     def specifications_for_dependency(dependency, additional_requirements = [])
       r = mbox_specifications_for_dependency_1108(dependency, additional_requirements)
+      return r unless config.lockfile
       if config.update_mode.nil? || 
         (config.update_mode.is_a?(Array) && !config.update_mode.include?(Specification.root_name(dependency.name)))
         locked = config.lockfile.version(dependency.name)

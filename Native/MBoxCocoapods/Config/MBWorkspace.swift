@@ -8,44 +8,23 @@
 
 import Foundation
 import MBoxCore
-import MBoxWorkspaceCore
 import MBoxRuby
 import MBoxGit
 import MBoxDependencyManager
 
 var MBWorkspacePodSearchEngineFlag: UInt8 = 0
+var MBWorkspacePodDependencyInfoFlag: UInt8 = 0
 
 extension MBWorkspace {
-    open class PodDependencyInfo: MBCodableObject, MBJSONProtocol {
-        @Codable(key: "sources")
-        private var _sources: [[String: String]]?
-        lazy var sources: [Source]? = _sources?.map { hash -> Source in
-            return Source(root: hash.first!.value, url: hash.first!.key)
-        }
-        func source(for dependency: Dependency) -> Source? {
-            return sources?.first { $0.url.lowercased() == dependency.source?.lowercased() }
-        }
 
-        @Codable
-        open var dependencies: [String: Dependency]?
-
-        public override func prepare(dictionary: [String : Any]) -> [String : Any] {
-            var dictionary = super.prepare(dictionary: dictionary)
-            if let dependencies = dictionary["dependencies"] {
-                dictionary["dependencies"] = try? [String: Dependency].load(fromObject: dependencies)
-            }
-            return dictionary
-        }
-    }
-
-    open var podSearchEngine: MBPodSearchEngine {
+    public var podSearchEngine: MBPodSearchEngine {
         return associatedObject(base: self, key: &MBWorkspacePodSearchEngineFlag) {
             return MBPodSearchEngine(workspace: self)
         }
     }
 
     @_dynamicReplacement(for: setupSearchEngines())
-    open func pod_setupSearchEngines() -> [MBDependencySearchEngine] {
+    public func pod_setupSearchEngines() -> [MBDependencySearchEngine] {
         var engines = self.setupSearchEngines()
         engines.append(self.podSearchEngine)
         return engines
@@ -86,7 +65,7 @@ extension MBWorkspace {
     }
 
     dynamic
-    open var podShouldInstall: Bool {
+    public var podShouldInstall: Bool {
         if !self.podlockPath.isExists || !self.podManifestPath.isExists {
             return true
         }

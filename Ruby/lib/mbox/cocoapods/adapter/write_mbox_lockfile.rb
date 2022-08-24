@@ -19,20 +19,27 @@ module Pod
 
   class Lockfile
     def self.load_from_repos
-      repos = MBox::Config.instance.current_feature.repos || []
-      dev_pods = MBox::Config.instance.development_pods
-      path = MBox::Config::Repo.lockfile_path
-      lockfile = new({})
-      lockfile.defined_in_file = path
-
       current_feature = ::MBox::Config.instance.current_feature
-      mbox_repos = current_feature.current_cocoapods_container_repos
+      podlock_paths = current_feature.current_cocoapods_containers.map do |container|
+        repo = current_feature.find_repo(container.repo_name)
+        next nil if repo.blank?
+        podlock_path = repo.podlock_path_by_name(container.name)
+        next nil if podlock_path.blank?
+        podlock_path
+      end.compact
+      return nil if podlock_paths.blank?
 
-      mbox_repos.each do |repo|
-        next if repo.podlock_path.nil? || !repo.podlock_path.exist?
-        hash = YAMLHelper.load_file(repo.podlock_path)
+      dev_pods = MBox::Config.instance.development_pods
+
+      # Avoid re-creating CocoaPods on each time doing pod install.
+      # See the logic in method 'installer.deintegrate_if_different_major_version'
+      lockfile = new({"COCOAPODS" => Version.create(VERSION).to_s})
+      lockfile.defined_in_file = MBox::Config::Repo.lockfile_path
+
+      podlock_paths.each do |podlock_path|
+        hash = YAMLHelper.load_file(podlock_path)
         unless hash && hash.is_a?(Hash)
-          raise Informative, "Invalid Lockfile in `#{path}`"
+          raise Informative, "Invalid Lockfile in `#{podlock_path}`"
         end
         if !dev_pods.blank? && !hash['PODS'].blank?
           hash['PODS'].delete_if do |pod|
@@ -73,11 +80,14 @@ module Pod
         checkout_options = sandbox.checkout_sources.select { |root_name, _| external_source_pods.include? root_name }
 
         current_feature = ::MBox::Config.instance.current_feature
-        mbox_repos = current_feature.current_cocoapods_container_repos
+        current_containers = current_feature.current_cocoapods_containers
 
-        mbox_repos.each do |repo|
-          next if repo.podfile_path.blank? || repo.podlock_path.blank?
-          path = repo.podfile_path
+        current_containers.each do |container|
+          repo = current_feature.find_repo(container.repo_name)
+          next if repo.blank?
+          podlock_path = repo.podlock_path_by_name(container.name)
+          next if podlock_path.blank?
+          path = repo.podfile_path_by_name(container.name)
           UI.message "- Writing independent Lockfile in #{path.dirname + "Podfile.lock"}" do
             specs_by_workspace = []
             root = repo.path.realpath.relative_path_from(MBox::Config.instance.project_root.realpath).to_s

@@ -32,6 +32,7 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler"
   spec.add_dependency "mbox"
-  spec.add_dependency 'cocoapods', '>= 1.7.0', '< 1.11.0'
+  spec.add_dependency 'cocoapods', '>= 1.7.0', '< 1.12.0'
   spec.add_dependency "mbox-container"
+  spec.add_dependency "concurrent-ruby"
 end

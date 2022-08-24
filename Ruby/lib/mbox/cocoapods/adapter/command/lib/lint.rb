@@ -1,12 +1,24 @@
 module Pod
   class Validator
     alias_method :mbox_pod_podfile_from_spec_0329, :podfile_from_spec
-    def podfile_from_spec(platform_name, deployment_target, use_frameworks = true, test_spec_names = [], use_modular_headers = false)
-      mbox_pod_podfile_from_spec_0329(platform_name, deployment_target, use_frameworks, test_spec_names, use_modular_headers).tap do |podfile|
-        if mbox_podfile = config.podfile
-          installation_method = mbox_podfile.installation_method
-          podfile.install!(installation_method[0], installation_method[1])
+    if Gem::Version.new(Pod::VERSION) >= Gem::Version.new("1.10.0")
+      def podfile_from_spec(platform_name, deployment_target, use_frameworks = true, test_spec_names = [], use_modular_headers = false, use_static_frameworks = false)
+        mbox_pod_podfile_from_spec_0329(platform_name, deployment_target, use_frameworks, test_spec_names, use_modular_headers, use_static_frameworks).tap do |podfile|
+          mbox_install!(podfile)
         end
+      end
+    else
+      def podfile_from_spec(platform_name, deployment_target, use_frameworks = true, test_spec_names = [], use_modular_headers = false)
+        mbox_pod_podfile_from_spec_0329(platform_name, deployment_target, use_frameworks, test_spec_names, use_modular_headers).tap do |podfile|
+          mbox_install!(podfile)
+        end
+      end
+    end
+
+    def mbox_install!(podfile)
+      if mbox_podfile = config.podfile
+        installation_method = mbox_podfile.installation_method
+        podfile.install!(installation_method[0], installation_method[1])
       end
     end
 

@@ -31,16 +31,21 @@ module Pod
     end
 
     def self.from_mbox
-
       current_feature = ::MBox::Config.instance.current_feature
-      mbox_repos = current_feature.current_cocoapods_container_repos
-      UI.message "[MBox] Integrate containers: #{mbox_repos.map(&:name).to_sentence}"
+      current_containers = current_feature.current_cocoapods_containers
+      if current_containers.blank?
+          raise StandardError, "No activated CocoaPods container. Use `mbox container use [NAME]` to activate one."
+      end
+      UI.message "[MBox] Integrate containers: #{current_containers.map(&:name).to_sentence}"
 
       Podfile.new(MBox::Config::Repo.podfile_path) do
         @sub_files = {}
         all_contents = {}
-        mbox_repos.each do |repo|
-          path = repo.podfile_path
+        current_containers.each do |container|
+          repo = current_feature.find_repo(container.repo_name)
+          next if repo.blank?
+
+          path = repo.podfile_path_by_name(container.name)
           if path
             contents = File.open(path, 'r:utf-8', &:read)
             # Work around for Rubinius incomplete encoding in 1.9 mode
@@ -54,10 +59,6 @@ module Pod
             # end
             # EOF
             @sub_files[repo.name] = path
-          elsif repo.project_path
-            # Error!!
-            # I don't known how to handle it.
-            next
           elsif repo.podspec_path
             # There is not the `target`, I don't known which target should be installed in.
             next
@@ -78,7 +79,11 @@ module Pod
 
 ################################## #{repo.name} ##################################
 Dir.chdir("#{path.dirname.relative_path_from(MBox::Config.instance.project_root)}") do
-  #{%(project "#{repo.project_path.relative_path_from(path.dirname)}") if repo.project_path}
+  #{
+  if project_path = repo.project_path_by_name(container.name)
+    %(project "#{project_path.relative_path_from(path.dirname)}")
+  end
+  }
   #{contents.gsub("\n", "\n    ")}
 end
 EOF

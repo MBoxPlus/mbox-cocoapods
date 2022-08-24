@@ -11,7 +11,7 @@ import MBoxContainer
 
 extension PodCMD {
     @_dynamicReplacement(for: setupEnvironment(_:))
-    open func container_pod_setupEnvironment(_ base: [String: String]? = nil) -> [String: String] {
+    public func container_pod_setupEnvironment(_ base: [String: String]? = nil) -> [String: String] {
         let env = self.setupEnvironment(base)
 
         var containerEnvs: [String: String] = [:]
@@ -20,7 +20,7 @@ extension PodCMD {
         containerEnvs["MBOX_CONTAINER_REPOS"] = containerRepos.toJSONString(pretty: false)!
         let currentContainer = currentFeature.activatedContainers(for: .CocoaPods).first
         containerEnvs["MBOX_CURRENT_CONTAINER"] = currentContainer?.name
-        containerEnvs["MBOX_CURRENT_CONTAINER_PATH"] = currentContainer?.repo?.workingPath
+        containerEnvs["MBOX_CURRENT_CONTAINER_PATH"] = currentContainer?.path
 
         return env.merging(containerEnvs, uniquingKeysWith: { $1 })
     }

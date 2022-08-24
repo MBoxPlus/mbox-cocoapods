@@ -12,19 +12,16 @@ import MBoxRuby
 import MBoxDependencyManager
 
 extension MBCommander.Depend {
-    open func fetchCocoaPodsDependencies() throws -> [String: Any] {
-        try UI.log(verbose: "Check bundler environment") {
-            try BundlerCMD.setup(workingDirectory: self.workspace.rootPath)
-        }
+    public func fetchCocoaPodsDependencies(_ names: [String]) throws -> [String: Any] {
         let pod = PodCMD()
-        return try pod.getDependencyInfo(withNames: []).toCodableObject() as? [String : Any] ?? [:]
+        return try pod.getDependencyInfo(withNames: names).toCodableObject() as? [String : Any] ?? [:]
     }
 
-    @_dynamicReplacement(for: showAllDependencies(for:))
-    open func cocoapods_showAllDependencies(for tool: MBDependencyTool) throws -> [String: Any] {
+    @_dynamicReplacement(for: showAllDependencies(_:for:))
+    public func cocoapods_showAllDependencies(_ names: [String], for tool: MBDependencyTool) throws -> [String: Any] {
         if tool == .CocoaPods {
-            return try self.fetchCocoaPodsDependencies()
+            return try self.fetchCocoaPodsDependencies(names)
         }
-        return try self.showAllDependencies(for: tool)
+        return try self.showAllDependencies(names, for: tool)
     }
 }

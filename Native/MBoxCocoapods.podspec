@@ -19,31 +19,16 @@ Pod::Spec.new do |spec|
   spec.author       = { `git config user.name`.strip => `git config user.email`.strip }
   spec.source       = { :git => "git@github.com/MBoxPlus/#{name2}.git", :tag => "#{spec.version}" }
 
-  spec.default_subspec = 'Default'
   spec.platform = :osx, '10.15'
 
-  spec.subspec 'Default' do |ss|
-    ss.source_files = "#{name}/*.{h,m,swift}", "#{name}/**/*.{h,m,swift}"
+  spec.source_files = "#{name}/*.{h,m,swift}", "#{name}/**/*.{h,m,swift}"
 
-    yaml['DEPENDENCIES']&.each do |name|
-      ss.dependency name
-    end
-
-    yaml['FORWARD_DEPENDENCIES']&.each do |name, _|
-      ss.dependency name
-    end
-    ss.dependency "#{name}/Loader"
+  yaml['DEPENDENCIES']&.each do |name|
+    spec.dependency name
   end
 
-  spec.subspec 'Loader' do |ss|
-    ss.source_files = "#{name}Loader/*.{h,m,swift}", "#{name}Loader/**/*.{h,m,swift}"
-
-    yaml['NATIVE_DEPENDENCIES']['Loader'].each do |name|
-      ss.dependency name
-    end
-
-    yaml['FORWARD_DEPENDENCIES']&.each do |name, _|
-      ss.dependency name
-    end
+  yaml['FORWARD_DEPENDENCIES']&.each do |name, _|
+    spec.dependency name
   end
+
 end

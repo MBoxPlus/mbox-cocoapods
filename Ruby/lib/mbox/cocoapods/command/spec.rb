@@ -37,8 +37,9 @@ module Pod
             return
           end
           json = spec.to_json
-          UI.info json
-          unless @filepath.nil?
+          if @filepath.nil?
+            UI.puts json
+          else
             File.write(@filepath, json)
           end
         end

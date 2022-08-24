@@ -7,11 +7,10 @@
 //
 
 import MBoxCore
-import MBoxWorkspaceCore
 
 extension MBWorkspace {
     @_dynamicReplacement(for: workspacePaths)
-    open var cocoapods_workspacePaths: [String: String] {
+    public var cocoapods_workspacePaths: [String: String] {
         var paths = self.workspacePaths
         for path in [xcworkspacePath, xcodeprojPath] {
             if path.isExists {

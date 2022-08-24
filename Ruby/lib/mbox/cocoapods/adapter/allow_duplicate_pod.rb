@@ -11,28 +11,6 @@ module Pod
           "\n\n- #{dependencies.map(&:to_s).join("\n- ")}"
         end
       end
-
-      # Replace origin method
-      def resolve_dependencies(locked_dependencies)
-        duplicate_dependencies = podfile_dependencies.group_by(&:name).
-          select { |_name, dependencies| dependencies.count(&:external_source) > 1 } # << # Replace origin method
-        duplicate_dependencies.each do |name, dependencies|
-          UI.warn "There are duplicate dependencies on `#{name}` in #{UI.path podfile.defined_in_file}:\n\n" \
-           "- #{dependencies.map(&:to_s).join("\n- ")}"
-        end
-
-        resolver_specs_by_target = nil
-        UI.section "Resolving dependencies of #{UI.path(podfile.defined_in_file) || 'Podfile'}" do
-          resolver = if Gem::Version.new(Pod::VERSION) >= Gem::Version.new("1.8.0")
-            Pod::Resolver.new(sandbox, podfile, locked_dependencies, sources, @specs_updated, :sources_manager => sources_manager)
-          else
-            Pod::Resolver.new(sandbox, podfile, locked_dependencies, sources, @specs_updated)
-          end
-          resolver_specs_by_target = resolver.resolve
-          resolver_specs_by_target.values.flatten(1).map(&:spec).each(&:validate_cocoapods_version)
-        end
-        resolver_specs_by_target
-      end
     end
   end
 

@@ -8,7 +8,6 @@
 
 import Foundation
 import MBoxCore
-import MBoxWorkspaceCore
 
 extension MBSetting.Workspace {
     @objc public var integrate: Bool {
@@ -24,18 +23,16 @@ extension MBSetting.Workspace {
 extension MBSetting {
     
     public class Cocoapods: MBCodableObject {
-        @Codable
-        public var xcodeproj: String?
 
         @Codable
         public var podfile: String?
 
         @Codable
-        public var lockfile: String?
-        
+        public var podfiles: [String: String]?
+
         @Codable
         public var podspec: String?
-        
+
         @Codable
         public var podspecs: [String]?
 
@@ -52,7 +49,7 @@ extension MBSetting {
                 return v
             }
             var hash = [String: Any]()
-            for name in ["xcodeproj", "podfile", "lockfile", "podspec", "podspecs"] {
+            for name in ["podfile", "podfiles", "podspec", "podspecs"] {
                 if let value = self.dictionary[name] as? String {
                     hash[name] = value
                 } else if let arrayValue = self.dictionary[name] as? [String] {
@@ -65,6 +62,4 @@ extension MBSetting {
             return v
         }
     }
-
-
 }

@@ -73,15 +73,15 @@ $ mbox plugin enable cocoapods
 
 ### 主项目/Container 接入
 
-1. 在主项目根目录下必须得有正确的 `Gemfile`，且相关依赖必须正确
-1. 在主项目根目录下的 `.mboxconfig` 配置文件中新增配置：
-```
+1. 为了保证项目的沙盒化，必须使用 Bundler 进行管理 CocoaPods。请先接入 [MBoxRuby](https://github.com/MBoxPlus/mbox-ruby.git) 容器！
+1. 配置 `.mboxconfig`:
+   1. 如果 `Podfile` 在项目根目录，则无需额外配置；
+   1. 如果 `Podfile` 不在项目根目录下，则需要新增配置：
+```json
 {
-   "podfile": "XX/Podfile", 
-   # (必需) 容器的 `Podfile` 文件所在路径，该字段为判断 CocoaPods 容器的依据
-
-   "podlock": "XX/Podfile.lock" 
-   #（可选）容器的 `Podfile.lock` 文件所在路径，如果项目没有` Podfile.lock` 或者不提交到 Git 仓库，请不要设置该配置。
+   "cocoapods": {
+      "podfile": "XX/Podfile", 
+   }
 }
 ```
 
@@ -90,18 +90,25 @@ $ mbox plugin enable cocoapods
 1. 该插件会自动搜索项目根目录下的 `*.podspec` 或者 `*.podspec.json` 文件
 1. 如果 `podspec` 文件不在根目录，需要在项目根目录下 `.mboxconfig` 配置文件中新增配置：
 
-```
+```json
 {
-   # 只有一个 podspec 文件
-   "podspec": "xx/yy.podspec"
+   "cocoapods": {
+      // 只有一个 podspec 文件
+      "podspec": "xx/yy.podspec",
 
-   # 当存在多个 podspec 文件，可以使用以下形式
-   "podspecs": [
-      "xx/yy1.podspec",
-      "xx/yy2.podspec"
-   ]
+      // 使用通配符匹配文件
+      "podspec": "xx/*.podspec",
+
+      // 当存在多个 podspec 文件，可以使用以下形式
+      "podspecs": [
+         "xx/yy1.podspec",
+         "xx/yy2.podspec"
+      ]
+   }
 }
 ```
+
+如果项目既是 Container 又是 Pod，则需要同时设置上述配置。
 
 ## Contributing
 Please reference the section [Contributing](https://github.com/MBoxPlus/mbox#contributing)

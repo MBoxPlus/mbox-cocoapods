@@ -7,13 +7,12 @@
 //
 
 import MBoxCore
-import MBoxWorkspaceCore
 import MBoxContainer
 import MBoxDependencyManager
 
 extension MBConfig.Feature {
     @_dynamicReplacement(for: clearWorkspaceEnv(platformTool:))
-    open func cocoapods_clearWorkspaceEnv(platformTool: MBDependencyTool) throws {
+    public func cocoapods_clearWorkspaceEnv(platformTool: MBDependencyTool) throws {
         if platformTool == .CocoaPods {
             if (FileManager.default.fileExists(atPath: Workspace.podlockPath)) {
                 try FileManager.default.removeItem(atPath: Workspace.podlockPath)
