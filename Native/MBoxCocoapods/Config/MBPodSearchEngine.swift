@@ -17,6 +17,13 @@ open class MBPodSearchEngine: MBDependencySearchEngine {
 
     public var enginePriority: Int = 50
 
+    public var url: MBGitURL?
+
+    dynamic
+    public func allDependencies() throws -> [Dependency] {
+        return []
+    }
+
     dynamic
     public func searchDependencies(by names: [String]) throws -> [Dependency] {
         let dependencies: [String: Dependency] = try UI.log(verbose: "Get all dependencies:") {
@@ -39,7 +46,7 @@ open class MBPodSearchEngine: MBDependencySearchEngine {
         return try self.dependency(for: spec)
     }
 
-    public func resolveDependency(name: String, version: String?, url: String?) throws -> Dependency? {
+    public func resolveDependency(name: String, version: String?) throws -> Dependency? {
         let cmd = PodCMD()
         let spec = try cmd.getSpecification(name: name, version: version, source: nil)
         let dep = try dependency(for: spec)

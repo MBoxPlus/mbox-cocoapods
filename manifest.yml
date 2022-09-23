@@ -7,8 +7,6 @@ DEPENDENCIES:
 - MBoxRuby
 - MBoxDependencyManager
 - MBoxContainer
-- MBoxKerberos
-- MBoxIOS
 FORWARD_DEPENDENCIES:
   MBoxWorkspace: 
 CLI: true

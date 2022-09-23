@@ -10,7 +10,7 @@ The `MBoxCocoapods` plugin will automatically deploy the `Bundler` environment, 
 ```
 $ mbox pod
 
-  Redirect to Bundler with MBox environment
+  Redirect to CocoaPods with MBox environment
 ```
 
 The plug-in hooks the `CocoaPods` environment deploy and dependency anlayzer. Taking `mbox pod install` as an example, there will be the following changes:

@@ -2,7 +2,9 @@
 
 其他语言：[English](./README.md)
 
-MBox 的 CocoaPods 插件，用来拓展 MBox 依赖管理能力，添加对 CocoaPods 依赖管理工具的支持
+MBox 的 CocoaPods 插件，用来拓展 MBox 依赖管理能力，添加对 CocoaPods 依赖管理工具的支持。
+
+当 Workspace 下存在依赖关系的仓库时，例如 主项目 + Pod 项目，使用命令 `mbox pod install` 将会自动使用本地的 Pod 源码项目，代替下载线上版本。
 
 ## Command
 
@@ -11,7 +13,7 @@ MBox 的 CocoaPods 插件，用来拓展 MBox 依赖管理能力，添加对 Coc
 ```
 $ mbox pod
 
-  Redirect to Bundler with MBox environment
+  Redirect to CocoaPods with MBox environment
 ```
 
 该插件 Hook 了 `CocoaPods` 环境准备，依赖解析等逻辑，以 `mbox pod install` 为例，将会有以下变化：
@@ -30,7 +32,7 @@ $ mbox pod
 
 通过 Hook MBox 和 CocoaPods 提供了一些能力：
 
-1. [MBoxCore] `mbox go` 支持打开 `.xcworkspace`/`.xcodeproj` 项目文件
+1. [MBoxWorkspace] `mbox go` 支持打开 `.xcworkspace`/`.xcodeproj` 项目文件
 1. [MBoxContainer] 新增 `CocoaPods` 容器
 1. [MBoxDependencyManager] 新增 `CocoaPods` 组件识别能力
 
@@ -49,7 +51,8 @@ $ mbox pod
 
 依赖的 Ruby 组件：
 
-1. CocoaPods, >= 1.7.0, < 1.11.0
+1. Bundler, >= 2.3.0 （会强制升级，无需用户干预）
+1. CocoaPods, >= 1.7.0, < 1.12.0
 
 ## 激活插件
 
@@ -75,19 +78,26 @@ $ mbox plugin enable cocoapods
 
 1. 为了保证项目的沙盒化，必须使用 Bundler 进行管理 CocoaPods。请先接入 [MBoxRuby](https://github.com/MBoxPlus/mbox-ruby.git) 容器！
 1. 配置 `.mboxconfig`:
-   1. 如果 `Podfile` 在项目根目录，则无需额外配置；
+   1. 如果 `Podfile` 在 `项目根目录`，则无需额外配置；
    1. 如果 `Podfile` 不在项目根目录下，则需要新增配置：
 ```json
 {
    "cocoapods": {
-      "podfile": "XX/Podfile", 
+      // 只有一个 podspec 文件
+      "podfile": "XX/Podfile",
+
+      // 当存在多个 podspec 文件，可以使用以下形式
+      "podfiles": {
+         "name1": "XX/Podfile",
+         "name2": "YY/Podfile",
+      }
    }
 }
 ```
 
 ### 组件/Pod 接入
 
-1. 该插件会自动搜索项目根目录下的 `*.podspec` 或者 `*.podspec.json` 文件
+1. 该插件会自动搜索项目 `根目录` 下所有的 `*.podspec` 或者 `*.podspec.json` 文件
 1. 如果 `podspec` 文件不在根目录，需要在项目根目录下 `.mboxconfig` 配置文件中新增配置：
 
 ```json

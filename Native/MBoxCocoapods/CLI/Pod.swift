@@ -10,7 +10,6 @@ import Foundation
 import MBoxCore
 import MBoxContainer
 import MBoxRuby
-import MBoxKerberos
 
 extension MBCommander {
     open class Pod: Bundle {
@@ -32,7 +31,6 @@ extension MBCommander {
 
         dynamic
         open override func run() throws {
-            MBCommander.Kerberos.renew()
             try UI.log(verbose: "Ignore Pods Sandbox") {
                 try self.gitIgnoreSandbox()
             }
