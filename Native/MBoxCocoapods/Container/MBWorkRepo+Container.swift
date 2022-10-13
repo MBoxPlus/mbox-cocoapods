@@ -7,19 +7,21 @@
 //
 
 import MBoxCore
-import MBoxWorkspaceCore
 import MBoxContainer
 import MBoxDependencyManager
 
 extension MBWorkRepo {
 
     @_dynamicReplacement(for: fetchContainers())
-    open func cocoapods_fetchContainers() -> [MBContainer] {
+    public func cocoapods_fetchContainers() -> [MBWorkRepo.Container] {
         var value = self.fetchContainers()
-        if let setting = self.setting.cocoapods,
-           setting.podfile != nil,
-           setting.xcodeproj != nil {
-            value.append(MBContainer(name: self.name, tool: .CocoaPods))
+        for (name, path) in self.podfilePaths {
+            let container = Container(name: name, tool: .CocoaPods, repo: self)
+                .withSpec(path: path)
+            if let lockPath = self.podlock(for: path) {
+                container.withLock(path: lockPath)
+            }
+            value.append(container)
         }
         return value
     }

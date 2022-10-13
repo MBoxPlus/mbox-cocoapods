@@ -81,10 +81,6 @@ module Pod
               mbox_scheme_path = File.join(workspace_scheme_dir, "#{mbox_scheme_name}.xcscheme")
               FileUtils.cp(path, mbox_scheme_path)
               Xcodeproj::XCScheme.new(mbox_scheme_path).tap do |scheme|
-                # 关闭并行编译
-                scheme.build_action.parallelize_buildables = false
-
-                # 更新相对路径
                 refs = []
                 refs.concat scheme.build_action.entries.map(&:buildable_references).flatten
                 [scheme.test_action, scheme.launch_action, scheme.profile_action].each do |action|
@@ -115,7 +111,7 @@ module Pod
                 entry.build_for_profiling = true
                 entry.build_for_archiving = true
                 entry.build_for_analyzing = true
-                # 更新相对路径，Xcodeproj 不支持直接设置路径
+
                 path = user_target.project.path.relative_path_from(workspace_path.dirname)
                 ref = entry.buildable_references.first
                 ref.container_path = path

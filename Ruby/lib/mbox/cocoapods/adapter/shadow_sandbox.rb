@@ -1,5 +1,6 @@
 
-# 使 Pods 目录能使用原始路径能访问到，防止 Xcode 文件引用中 Pods/xxx.xcconfig 路径变动
+# Make the pods directory accessible using the original path,
+# and prevent the path be changed of `Pods/xx.xcconfig` in the Xcode file reference
 module Pod
   # class Sandbox
   #   def root=(root)
@@ -31,7 +32,6 @@ module Pod
                 @@sandbox_links << group_path
               end
 
-              # 预先创建 xcconfig 引用，使用 realpath 做相对路径
               xcconfig_path = Pathname.new(pod_bundle.xcconfig_path(config.name))
               filename = xcconfig_path.basename.to_s
               unless group.files.find { |f| f.display_name == filename }

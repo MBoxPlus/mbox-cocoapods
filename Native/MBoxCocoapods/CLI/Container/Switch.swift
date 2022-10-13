@@ -12,7 +12,7 @@ import MBoxContainer
 
 extension MBCommander.Container.Switch {
     @_dynamicReplacement(for: run())
-    open func containerRun() throws {
+    public func containerRun() throws {
         try self.run()
 
         if self.workspace.podShouldInstall {

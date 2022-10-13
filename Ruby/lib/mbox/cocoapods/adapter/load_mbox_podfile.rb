@@ -31,21 +31,21 @@ module Pod
     end
 
     def self.from_mbox
-
       current_feature = ::MBox::Config.instance.current_feature
-      mbox_repos =
-          if current_feature.current_container_names.blank?
-            current_feature.repos
-          else
-            UI.puts "[MBox] Integrate containers: #{current_feature.current_container_names.to_sentence}"
-            current_feature.current_container_repos
-          end || []
+      current_containers = current_feature.current_cocoapods_containers
+      if current_containers.blank?
+          raise StandardError, "No activated CocoaPods container. Use `mbox container use [NAME]` to activate one."
+      end
+      UI.message "[MBox] Integrate containers: #{current_containers.map(&:name).to_sentence}"
 
       Podfile.new(MBox::Config::Repo.podfile_path) do
         @sub_files = {}
         all_contents = {}
-        mbox_repos.each do |repo|
-          path = repo.podfile_path
+        current_containers.each do |container|
+          repo = current_feature.find_repo(container.repo_name)
+          next if repo.blank?
+
+          path = repo.podfile_path_by_name(container.name)
           if path
             contents = File.open(path, 'r:utf-8', &:read)
             # Work around for Rubinius incomplete encoding in 1.9 mode
@@ -59,12 +59,8 @@ module Pod
             # end
             # EOF
             @sub_files[repo.name] = path
-          elsif repo.project_path
-            # 无法判断该项目如何处理
-            next
           elsif repo.podspec_path
-            # 由于无 target 信息，故无法明确安装到哪一个 target 上。
-            # 如果直接安装到 Root 级别，由于继承关系，会导致所有 target 均使用该依赖
+            # There is not the `target`, I don't known which target should be installed in.
             next
           else
             UI.warn "`#{repo.name}` has NOT a `Podfile` or a `*.xcodeproj`. Skip it."
@@ -83,7 +79,11 @@ module Pod
 
 ################################## #{repo.name} ##################################
 Dir.chdir("#{path.dirname.relative_path_from(MBox::Config.instance.project_root)}") do
-  #{%(project "#{repo.project_path.relative_path_from(path.dirname)}") if repo.project_path}
+  #{
+  if project_path = repo.project_path_by_name(container.name)
+    %(project "#{project_path.relative_path_from(path.dirname)}")
+  end
+  }
   #{contents.gsub("\n", "\n    ")}
 end
 EOF
@@ -110,7 +110,7 @@ EOF
 
     class TargetDefinition
 
-      # 解析相对路径，提取当前 Dir.chdir 环境
+      # Resolve the relative path, inject `Dir.chdir` into the path.
       def resolve_relative_path(path)
         dirpath = podfile.defined_in_file.dirname.realpath
         return path if dirpath.to_s == Dir.pwd
@@ -149,12 +149,12 @@ EOF
         path, type = @cached_paths[pod_name]
         if type.blank? || path.blank?
           if dev_podspec_path
-            # 开发中的 Pod 完全无视依赖设置，直接使用本地代码版本
+            # The development pod should ignore the requirement.
             path = dev_podspec_path.dirname
             path = path.relative_path_from(podfile.defined_in_file.dirname) if podfile.defined_in_file
             @cached_paths[pod_name] = [path.to_s, :path]
           else
-            # 更新相对路径
+            # Update the relative path
             if path = options[:path]
               @cached_paths[pod_name] = [resolve_relative_path(path), :path]
             end
@@ -174,7 +174,7 @@ EOF
         end
 
         if dev_podspec_path
-          # 清理版本号
+          # Clean the version requirement.
           requirements = [options]
         end
 
@@ -187,7 +187,7 @@ EOF
         options = (options || {}).dup
         path = options[:path]
         if path.nil?
-          # autoselect 功能失效，需要预先扫描 podspec 文件
+          # The Autoselect not work, instead, we scan the directory to get the podspec file.
           path = Dir["#{options[:name] || "*"}.{podspec,podspec.json}"].first
           if path.blank?
             raise StandardError, "Could not find the podspec in `#{Dir.pwd}`."
@@ -201,7 +201,7 @@ EOF
       alias_method :mbox_pod_inhibits_warnings_for_pod_0523?, :inhibits_warnings_for_pod?
       def inhibits_warnings_for_pod?(pod_name)
         if MBox::Config.instance.development_pods[pod_name]
-          # 强制关闭 inhibit_warnings
+          # disable inhibit_warnings for development pods
           false
         else
           mbox_pod_inhibits_warnings_for_pod_0523?(pod_name)
@@ -210,19 +210,18 @@ EOF
     end
   end
 
-  # 防止本地 Repo 中的 Spec.version 与线上版本不一致，导致版本仲裁失败
+  # The verison file (in the local development repository) maybe different with the release version.
+  # It will raise a conflict. We handle this case to ignore it.
   class Resolver
     alias_method :mbox_requirement_satisfied_by_0108?, :requirement_satisfied_by?
     def requirement_satisfied_by?(requirement, activated, spec)
-      status = mbox_requirement_satisfied_by_0108?(requirement, activated, spec)
-      if !status
-        repo = MBox::Config.instance.development_repos[Specification.root_name(requirement.name)]
-        if repo
-          UI.warn "Local Repo `#{repo.name}` is in conflict with `#{requirement}`, MBox force use the local development repo."
-          status = true
-        end
+      return true if mbox_requirement_satisfied_by_0108?(requirement, activated, spec)
+      spec_path = MBox::Config.instance.development_pods[Specification.root_name(requirement.name)]
+      if spec_path
+        UI.warn "Local Pod `#{spec_path} (#{spec.version})` is in conflict with `#{requirement}`, MBox force use the local development pod."
+        return true
       end
-      status
+      false
     end
 
     alias_method :mbox_specifications_for_dependency_0108, :specifications_for_dependency

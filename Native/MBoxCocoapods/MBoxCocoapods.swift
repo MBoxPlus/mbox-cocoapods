@@ -7,8 +7,7 @@
 //
 
 import Cocoa
-import MBoxCore
-import MBoxWorkspaceCore
+@_exported import MBoxWorkspace
 
 @objc(MBoxCocoapods)
 open class MBoxCocoapods: NSObject, MBPluginProtocol {

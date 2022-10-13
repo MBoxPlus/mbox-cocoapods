@@ -4,15 +4,12 @@ module Pod
     def mbox_all_dependencies(only_names=nil)
       hash = {}
       dependencies.each do |dp|
-        root_name = dp.root_name
-        next if only_names && !only_names.include?(root_name.downcase)
-        req = (dp.external_source || {}).dup
-        req[:source] = dp.podspec_repo if dp.podspec_repo
-        req[:version] = dp.specific_version || dp.requirement.requirements.select { |k, v| k == "=" }.map { |_, v| v }.first
-        if hash[root_name]
-          hash[root_name].merge!(req)
+        dp = dp.to_root_dependency
+        next if !only_names.blank? && !only_names.include?(dp.name.downcase)
+        if dp2 = hash[dp.name]
+          dp2.merge(dp)
         else
-          hash[root_name] = req
+          hash[dp.name] = dp
         end
       end
       hash
@@ -25,28 +22,26 @@ module Pod
 
       pod_versions.each do |name, version|
         name = Specification.root_name(name)
-        next if only_names && !only_names.include?(name.downcase)
-        hash[name] = { :version => version } if hash[name].nil?
+        next if !only_names.blank? && !only_names.include?(name.downcase)
+        if hash[name].nil?
+          hash[name] = Dependency.new(name, version)
+        end
       end
       external_sources_data.each do |name, data|
-        next if only_names && !only_names.include?(name.downcase)
-        if hash[name]
-          hash[name].merge!(data)
-        else
-          hash[name] = data.dup
+        next if !only_names.blank? && !only_names.include?(name.downcase)
+        if dep = hash[name]
+          dep.external_source = data.dup
         end
       end
       checkout_options_data.each do |name, data|
-        next if only_names && !only_names.include?(name.downcase)
-        if hash[name]
-          hash[name].merge!(data)
-        else
-          hash[name] = data.dup
+        next if !only_names.blank? && !only_names.include?(name.downcase)
+        if dep = hash[name]
+          dep.external_source.merge!(data)
         end
       end
-      hash.each do |name, data|
+      hash.each do |name, dep|
         source = spec_repo(name)
-        data["source"] = source if source
+        dep.podspec_repo = source if source
       end
 
       hash

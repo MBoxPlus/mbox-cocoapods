@@ -8,11 +8,10 @@
 
 import Foundation
 import MBoxCore
-import MBoxWorkspaceCore
 
 extension MBCommander.Feature.Start {
     @_dynamicReplacement(for: run())
-    open func featureRun() throws {
+    public func featureRun() throws {
         try self.run()
         
         if self.workspace.podShouldInstall {

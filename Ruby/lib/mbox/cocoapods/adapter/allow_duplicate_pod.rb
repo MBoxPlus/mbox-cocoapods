@@ -1,43 +1,21 @@
 module Pod
   class Installer
     class Analyzer
-      # 该方法覆盖原生方法
+      # Replace origin method
       def verify_no_pods_with_different_sources!
         deps_with_different_sources = podfile_dependencies.group_by(&:root_name).
-          select { |_root_name, dependencies| dependencies.map(&:external_source).compact.uniq.count > 1 } # << 替换原生函数
+          select { |_root_name, dependencies| dependencies.map(&:external_source).compact.uniq.count > 1 } # << Replace origin method
         deps_with_different_sources.each do |root_name, dependencies|
           raise Informative, 'There are multiple dependencies with different ' \
           "sources for `#{root_name}` in #{UI.path podfile.defined_in_file}:" \
           "\n\n- #{dependencies.map(&:to_s).join("\n- ")}"
         end
       end
-
-      # 该方法覆盖原生方法
-      def resolve_dependencies(locked_dependencies)
-        duplicate_dependencies = podfile_dependencies.group_by(&:name).
-          select { |_name, dependencies| dependencies.count(&:external_source) > 1 } # << 替换原生函数
-        duplicate_dependencies.each do |name, dependencies|
-          UI.warn "There are duplicate dependencies on `#{name}` in #{UI.path podfile.defined_in_file}:\n\n" \
-           "- #{dependencies.map(&:to_s).join("\n- ")}"
-        end
-
-        resolver_specs_by_target = nil
-        UI.section "Resolving dependencies of #{UI.path(podfile.defined_in_file) || 'Podfile'}" do
-          resolver = if Gem::Version.new(Pod::VERSION) >= Gem::Version.new("1.8.0")
-            Pod::Resolver.new(sandbox, podfile, locked_dependencies, sources, @specs_updated, :sources_manager => sources_manager)
-          else
-            Pod::Resolver.new(sandbox, podfile, locked_dependencies, sources, @specs_updated)
-          end
-          resolver_specs_by_target = resolver.resolve
-          resolver_specs_by_target.values.flatten(1).map(&:spec).each(&:validate_cocoapods_version)
-        end
-        resolver_specs_by_target
-      end
     end
   end
 
   class Lockfile
-    # 该方法覆盖原生方法
+    # Replace origin method
     def detect_changes_with_podfile(podfile)
       result = {}
       [:added, :changed, :removed, :unchanged].each { |k| result[k] = [] }

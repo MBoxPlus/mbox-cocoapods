@@ -2,14 +2,13 @@
 //  MBPodSearchEngine.swift
 //  MBoxCocoapods
 //
-//  Created by 詹迟晶 on 2020/4/15.
+//  Created by Whirlwind on 2020/4/15.
 //  Copyright © 2020 com.bytedance. All rights reserved.
 //
 
 import Foundation
 import MBoxCore
 import MBoxGit
-import MBoxWorkspaceCore
 import MBoxDependencyManager
 import MBoxRuby
 
@@ -18,71 +17,70 @@ open class MBPodSearchEngine: MBDependencySearchEngine {
 
     public var enginePriority: Int = 50
 
+    public var url: MBGitURL?
+
     dynamic
-    open func getCurrentDependency(by names: [String]) throws -> Dependency? {
-        try UI.log(verbose: "Check bundler environment") {
-            try BundlerCMD.setup(workingDirectory: self.workspace.rootPath)
-        }
-        let pod = PodCMD(workingDirectory: self.workspace.rootPath)
-        let info = try pod.getDependencyInfo(withNames: names)
-        if let sources = info.sources {
-            self.sources = sources
-        }
-        if let value = info.dependencies?.first {
-            let (name, dependency) = value
-            if let source = info.source(for: dependency) {
-                self.sources = [source]
-            }
-            dependency.name = name
-            return dependency
-        }
-        return nil
+    public func allDependencies() throws -> [Dependency] {
+        return []
     }
 
-    public func searchDependency(name: String, version: String?) throws -> (MBConfig.Repo, Date?)? {
-        let repo = MBConfig.Repo(name: name, feature: UI.feature!)
-        if let version = version {
-            let specPath: String = try UI.log(verbose: "Query podspec with \(repo.name) (\(version)) in sources:", items: self.sources.map { $0.description }) {
-                guard let specPath = try Source.specifationPath(name: repo.name, version: version, sources: self.sources) else {
-                    throw RuntimeError("Could not find the podspec `\(repo.name) (\(version))`.\nThe cocoapods spec repo maybe outdated. Please try to run `mbox pod repo update` first.")
-                }
-                return specPath
-            }
-            let info = try source(for: specPath)
-            repo.name = info.name
-            repo.url = info.url
-            repo.baseGitPointer = info.git
-        } else {
-            UI.log(verbose: "Could not find the dependency `\(name)` from CocoaPods Dependencies, MBox will search it from global environment.")
-            let specPath: String = try UI.log(verbose: "Query lastest podspec with `\(repo.name)` in sources:", items: self.sources.map({ $0.description })) {
-                guard let specPath = try Source.specifationPath(name: repo.name, sources: self.sources) else {
-                    throw RuntimeError("Could not find the podspec `\(repo.name)`.\nThe cocoapods spec repo maybe outdated. Please try to run `mbox pod repo update` first.")
-                }
-                return specPath
-            }
-            let info = try source(for: specPath)
-            repo.name = info.name
-            repo.url = info.url
+    dynamic
+    public func searchDependencies(by names: [String]) throws -> [Dependency] {
+        let dependencies: [String: Dependency] = try UI.log(verbose: "Get all dependencies:") {
+            let pod = PodCMD(workingDirectory: self.workspace.rootPath)
+            return try pod.getDependencyInfo(detailed: true)
         }
-        return (repo, nil)
+        let dependenciesByGit = Dictionary(grouping: dependencies.values) { $0.git?.lowercased() ?? ""
+        }
+        let foundDependencies = names.compactMap { dependencies[$0.lowercased()] }
+        guard let git = foundDependencies.compactMap({ $0.git }).first,
+              let otherDps = dependenciesByGit[git.lowercased()] else {
+            return foundDependencies
+        }
+        return (foundDependencies + otherDps).withoutDuplicates()
+    }
+
+    public func resolveDependency(name: String, version: String, source: String?) throws -> Dependency? {
+        let cmd = PodCMD()
+        let spec = try cmd.getSpecification(name: name, version: version, source: source)
+        return try self.dependency(for: spec)
+    }
+
+    public func resolveDependency(name: String, version: String?) throws -> Dependency? {
+        let cmd = PodCMD()
+        let spec = try cmd.getSpecification(name: name, version: version, source: nil)
+        let dep = try dependency(for: spec)
+        if version == nil {
+            dep.gitPointer = nil
+            dep.version = nil
+        }
+        UI.log(verbose: "Use \(dep)")
+        return dep
     }
 
     init(workspace: MBWorkspace) {
         self.workspace = workspace
     }
     open weak var workspace: MBWorkspace!
-    open lazy var sources: [Source] = Source.all
 
-    public func source(for specPath: String) throws -> (name: String, url: String, git: GitPointer?) {
+    public func dependency(for specPath: String) throws -> Dependency {
         let spec = try specification(path: specPath)
+        return try self.dependency(for: spec)
+    }
+
+    public func dependency(for spec: Specification) throws -> Dependency {
         guard let sourceCode = (spec.sourceCode ?? spec.source) else {
             throw RuntimeError("Could not find sourcecode in the spec: `\(spec.filePath!)`")
         }
         guard let url = sourceCode.git else {
             throw RuntimeError("Source type is not supported!")
         }
-        UI.log(verbose: "Use \(spec.name): \(url) (\(sourceCode.gitPointer?.description ?? "none"))")
-        return (name: spec.name, url: url, git: sourceCode.gitPointer)
+        let dep = Dependency()
+        dep.name = spec.name
+        dep.version = spec.version
+        dep.git = url
+        dep.gitPointer = sourceCode.gitPointer
+        return dep
     }
 
     open func specification(path: String) throws -> Specification {
@@ -90,7 +88,6 @@ open class MBPodSearchEngine: MBDependencySearchEngine {
         if path.pathExtension == "json" {
             content = try String(contentsOfFile: path)
         } else {
-            // TTY 模式不支持 error 通道，为了避免 Error 通道的信息干扰，不使用 TTY
             let pod = PodCMD(workingDirectory: self.workspace.rootPath, useTTY: false)
             guard pod.exec("ipc spec '\(path)'") else {
                 throw RuntimeError("Convert podspec to json failed: `\(path)`")

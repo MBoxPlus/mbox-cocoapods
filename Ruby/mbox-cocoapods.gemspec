@@ -6,12 +6,12 @@ require "mbox/cocoapods/version"
 Gem::Specification.new do |spec|
   spec.name          = "mbox-cocoapods"
   spec.version       = MBox::Cocoapods::VERSION
-  spec.authors       = ["詹迟晶"]
+  spec.authors       = ["WhirlwindJames"]
   spec.email         = ["james.zhan@bytedance.com"]
 
   spec.summary       = %q{MBox cocoapods plugin.}
   spec.description   = %q{Hook Cocoapods to support mbox.}
-  spec.homepage      = "https://github.com/MBoxSpace/mbox-cocoapods.git"
+  spec.homepage      = "https://github.com/MBoxPlus/mbox-cocoapods.git"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
@@ -32,7 +32,7 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler"
   spec.add_dependency "mbox"
-  spec.add_dependency 'cocoapods', '>= 1.7.0', '< 1.11.0'
-  spec.add_dependency 'cocoapods-changeling', '>= 3.0.0', '< 4.0.0'
+  spec.add_dependency 'cocoapods', '>= 1.7.0', '< 1.12.0'
   spec.add_dependency "mbox-container"
+  spec.add_dependency "concurrent-ruby"
 end

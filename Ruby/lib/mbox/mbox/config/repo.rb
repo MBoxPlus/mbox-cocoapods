@@ -8,6 +8,14 @@ module MBox
         info["active"]
       end
 
+      alias_method :mbox_cocoapods_all_containers_0923, :all_containers
+      def all_containers
+        cocoapods_containers = podfile_paths.map { |name, _|
+          Feature::Container.new(name, self.name, "CocoaPods")
+        }
+        mbox_cocoapods_all_containers_0923 + cocoapods_containers
+      end
+
       def pod_name
         pod_names.first
       end
@@ -33,25 +41,46 @@ module MBox
       end
 
       def podfile_path
-        @podfile_path ||= search_podfile
+        return nil if podfile_paths.nil? || podfile_paths.blank?
+        podfile_paths.values.first
       end
 
-      def podlock_path
-        @podlock_path ||= search_podlock
+      def podfile_paths
+        @podfile_paths ||= search_podfiles
       end
 
-      def project_path
-        @project_path ||= search_project
+      def podfile_path_by_name(name)
+        podfile_paths.transform_keys { |k| k.downcase }[name.downcase]
+      end
+
+      def podlock_paths
+        @podlock_paths ||= search_podlocks
+      end
+
+      def podlock_path_by_name(name)
+        podlock_paths.transform_keys { |k| k.downcase }[name.downcase]
+      end
+
+      def project_paths
+        @project_paths ||= search_projects
+      end
+
+      def project_path_by_name(name)
+        project_paths.transform_keys { |k| k.downcase }[name.downcase]
+      end
+
+      def pod_targets
+        setting_for_key("cocoapods.podtargets") || {}
+      end
+
+      def pod_targets_by_name(name)
+        v = pod_targets.transform_keys { |k| k.downcase }[name.downcase]
+        return nil if v.blank?
+        v.keys
       end
 
       def sdk?
         !pod_name.nil?
-      end
-
-      def targets
-        return [] if project_path.blank?
-
-        Xcodeproj::Project.open(project_path).targets
       end
 
       private
@@ -63,59 +92,63 @@ module MBox
         'Podfile.rb',
       ].freeze
 
-      def search_podfile
-        name = setting_for_key("podfile")
-        return working_path.join(name) unless name.blank?
-        nil
+      def search_podfiles
+        filenames = setting_for_key("cocoapods.podfiles") || {}
+        if v = setting_for_key("cocoapods.podfile")
+          filenames[self.name] = v
+        end
+
+        paths = filenames.transform_values { |file|
+          working_path.join(file)
+        }.select { |_, path|
+          path.exist?
+        }
+
+        if paths.blank?
+          path = PODFILE_NAMES.map { |file| working_path.join(file) }.find { |path| path.exist? }
+          if path
+            paths[self.name] = path
+          end
+        end
+
+        paths
       end
 
       def search_podspecs
         @search_podspecs ||= begin
           return {} unless working_path.exist?
-          name = setting_for_key("podspecs") || setting_for_key("podspec")
-          names = name if name.is_a?(Array)
-          names = [name] if name.is_a?(String) && !name.blank?
-          Dir.chdir(working_path) do
-            names = if names.blank?
-              Dir["*.podspec.json"] + Dir["*.podspec"]
-            else
-              names.map do |name|
-                Dir[name].select { |n| n.end_with?('.podspec') || n.end_with?('.podspec.json') }
-              end.flatten
-            end
-          end
-          return {} if names.blank?
-          names.map do |name|
-            spec_path = working_path.join(name)
-            if spec_path.exist?
-              if spec = ::Pod::Specification.from_file(spec_path)
-                [spec.name, spec]
-              end
+          specs = paths_for_setting("cocoapods.podspecs", singular: "cocoapods.podspec", defaults: ["*.podspec{.json,}"])
+          return {} if specs.blank?
+          specs.map do |spec_path|
+            if spec = ::Pod::Specification.from_file(spec_path)
+              [spec.name, spec]
             end
           end.compact.to_h
         end
       end
       
-      def search_podlock
-        return nil unless working_path.exist?
-        name = setting_for_key("podlock")
-        return nil if name.blank?
-        name = Pathname.new(name)
-        if name.basename.to_s != 'Podfile.lock'
-          name += 'Podfile.lock'
+      def search_podlocks
+        return {} unless podfile_paths
+        locks = podfile_paths.transform_values { |path| path.dirname + "Podfile.lock" }
+        Dir.chdir(working_path) do
+          locks.select { |_, path|
+            `git ls-files --error-unmatch '#{path}' 2>/dev/null`
+            $? == 0
+          }
         end
-        path + name
       end
 
-      def search_project
-        return nil unless working_path.exist?
-        name = setting_for_key("xcodeproj")
-        if name.blank?
-          Dir.chdir(working_path) do
-            name = Dir["*.xcodeproj"].reject{ |name| name == "_Pods.xcodeproj" }.first
+      def search_projects
+        return {} unless working_path.exist?
+        return {} if podfile_paths.blank?
+        podfile_paths.transform_values { |path|
+          dir = path.dirname
+          Dir.chdir(dir) do
+            if file = Dir["*.xcodeproj"].reject{ |name| name == "_Pods.xcodeproj" }.first
+              dir.join(file)
+            end
           end
-        end
-        name ? working_path.join(name) : nil
+        }.compact
       end
 
       public

@@ -33,14 +33,19 @@ public class Specification: MBCodableObject, MBJSONProtocol {
         }
         return dictionary
     }
-    
+
+    public static func rootName(_ name: String) -> String {
+        return String(name.split(separator: "/").first!)
+    }
+
     open class func load(from path: String) throws -> Specification {
         let content: String
         if path.pathExtension == "json" {
             content = try String(contentsOfFile: path)
         } else {
-            // TTY 模式不支持 error 通道，为了避免 Error 通道的信息干扰，不使用 TTY
-            guard let rootPath = UI.workspace?.rootPath else {
+            // No use TTY mode.
+            // In TTY, we could not filter the STDERR.
+            guard let rootPath = MBProcess.shared.workspace?.rootPath else {
                 throw RuntimeError("Convert podspec to json must run in workspace.")
             }
             let pod = PodCMD(workingDirectory: rootPath, useTTY: false)

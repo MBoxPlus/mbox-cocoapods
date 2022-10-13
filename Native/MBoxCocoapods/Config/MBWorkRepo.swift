@@ -7,38 +7,46 @@
 //
 
 import Foundation
-import MBoxWorkspaceCore
 import MBoxContainer
 import MBoxDependencyManager
 
 extension MBWorkRepo {
-    public func allPodspecPaths() -> [String] {
-        var baseNames = self.setting.cocoapods?.podspecs ?? []
-        if baseNames.isEmpty,
-            let basename = self.setting.cocoapods?.podspec {
-            baseNames = [basename]
+
+    public static var podfileNames: [String] = [
+        "CocoaPods.podfile.yaml",
+        "CocoaPods.podfile",
+        "Podfile",
+        "Podfile.rb"
+    ]
+
+    public var podfilePaths: [String: String] {
+        var podfiles = self.setting.cocoapods?.podfiles ?? [:]
+        if let podfile = self.setting.cocoapods?.podfile {
+            podfiles[self.name] = podfile
         }
-        if baseNames.isEmpty {
-            for file in self.path.subFiles {
-                let filePath = file.lastPathComponent
-                if filePath.lowercased().hasSuffix(".podspec") || filePath.lowercased().hasSuffix(".podspec.json") {
-                    baseNames.append(filePath)
-                }
-            }
-        }
-        return baseNames.compactMap {
-            self.path.appending(pathComponent: $0)
-        }.filter { $0.isExists }
+        return self.paths(for: podfiles, defaults: (self.name, Self.podfileNames))
     }
 
-    @_dynamicReplacement(for: resolveDependencyNames())
-    open func cocoapods_resolveDependencyNames() -> [(tool: MBDependencyTool, name: String)] {
-        var names = self.resolveDependencyNames()
-        let data = self.allPodspecPaths().map {
-            (
-                tool: MBDependencyTool.CocoaPods,
-                name: $0.lastPathComponent.deleteSuffix(".json").deleteSuffix(".podspec")
-            )
+    public func podlock(for path: String) -> String? {
+        let path = path.deletingLastPathComponent.appending(pathComponent: "Podfile.lock")
+        return path.isFile ? path : nil
+    }
+
+    public var podspecPaths: [String] {
+        var specs = self.setting.cocoapods?.podspecs ?? []
+        if specs.isEmpty, let spec = self.setting.cocoapods?.podspec {
+            specs.append(spec)
+        }
+        return self.paths(for: specs, defaults: ["*.podspec{.json,}"])
+    }
+
+    @_dynamicReplacement(for: resolveComponents())
+    public func cocoapods_resolveComponents() -> [Component] {
+        var names = self.resolveComponents()
+        let data = self.podspecPaths.map {
+            Component(name: $0.lastPathComponent.deleteSuffix(".json").deleteSuffix(".podspec"),
+                      tool: MBDependencyTool.CocoaPods,
+                      repo: self)
         }
         names.append(contentsOf: data)
         return names
@@ -47,7 +55,7 @@ extension MBWorkRepo {
 
 extension MBWorkRepo {
     @_dynamicReplacement(for: pathsToLink)
-    open var cocoapods_pathsToLink: [String] {
+    public var cocoapods_pathsToLink: [String] {
         var paths = self.pathsToLink
         if !self.model.activatedContainers(for: .CocoaPods).isEmpty,
            let config = self.setting.cocoapods?.symlinks {

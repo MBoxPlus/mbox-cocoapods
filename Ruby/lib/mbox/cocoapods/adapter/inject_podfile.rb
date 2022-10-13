@@ -29,9 +29,9 @@ module Pod
       end
 
       class SinglePodsProjectGenerator
-        alias_method :mbox_geneerate_1018!, :generate!
+        alias_method :mbox_generate_1018!, :generate!
         def generate!
-          result = mbox_geneerate_1018!
+          result = mbox_generate_1018!
           inject_multi_podfiles(result.project)
           result
         end

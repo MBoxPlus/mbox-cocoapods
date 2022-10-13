@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,18 +13,16 @@
 		5928D42925907DE10070F1A7 /* PodCMD+Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5928D42825907DE00070F1A7 /* PodCMD+Container.swift */; };
 		597696D825174992000F57AE /* Switch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597696D725174992000F57AE /* Switch.swift */; };
 		597696DF25174A30000F57AE /* Start.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597696DE25174A30000F57AE /* Start.swift */; };
-		AB07111825E7D29E007294A5 /* MBoxCocoapodsLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = AB07111625E7D29E007294A5 /* MBoxCocoapodsLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		AB2D48EC23C60AB100596FEF /* MBDependencyTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2D48EB23C60AB100596FEF /* MBDependencyTool.swift */; };
+		AB19429E2747582F0079C7B0 /* MBDependencyTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB19429D2747582F0079C7B0 /* MBDependencyTool.swift */; };
 		AB3DBE9B22E859F600593F79 /* Go.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3DBE9A22E859F600593F79 /* Go.swift */; };
 		AB3DBEA122E86F2700593F79 /* MBWorkRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3DBEA022E86F2700593F79 /* MBWorkRepo.swift */; };
 		AB3DBEA322E86F5E00593F79 /* MBWorkspace.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3DBEA222E86F5E00593F79 /* MBWorkspace.swift */; };
 		AB3DBEA522E8770D00593F79 /* MBFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3DBEA422E8770D00593F79 /* MBFeature.swift */; };
 		AB4648AE2310698100972C12 /* PodCMD.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4648AD2310698100972C12 /* PodCMD.swift */; };
 		AB49EE8B2446E1E200515D45 /* MBPodSearchEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB49EE8A2446E1E200515D45 /* MBPodSearchEngine.swift */; };
-		AB5E306322EC885C004F716F /* Metadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5E306222EC885C004F716F /* Metadata.swift */; };
-		AB5E306922EC8BF2004F716F /* Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5E306822EC8BF2004F716F /* Source.swift */; };
 		AB5E307522ECAB5D004F716F /* Specification.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5E307422ECAB5D004F716F /* Specification.swift */; };
 		AB9A5ED823827757000A24BA /* MBSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9A5ED723827757000A24BA /* MBSetting.swift */; };
+		ABF0F58B26B94930008ADE91 /* Depend.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF0F58A26B94930008ADE91 /* Depend.swift */; };
 		ABF5669E22E58D3100421916 /* MBoxCocoapods.h in Headers */ = {isa = PBXBuildFile; fileRef = ABF5669C22E58D3100421916 /* MBoxCocoapods.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ABF566BA22E5CC5E00421916 /* Pod.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF566B922E5CC5E00421916 /* Pod.swift */; };
 		ABF566BC22E5CEA600421916 /* MBoxCocoapods.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF566BB22E5CEA600421916 /* MBoxCocoapods.swift */; };
@@ -39,22 +37,18 @@
 		597696DE25174A30000F57AE /* Start.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Start.swift; sourceTree = "<group>"; };
 		65B83D847BEDC1332C66E966 /* Pods-MBoxCocoapods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MBoxCocoapods.debug.xcconfig"; path = "Target Support Files/Pods-MBoxCocoapods/Pods-MBoxCocoapods.debug.xcconfig"; sourceTree = "<group>"; };
 		882E435C2AA7779C203650F6 /* Pods-MBoxCocoapods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MBoxCocoapods.release.xcconfig"; path = "Target Support Files/Pods-MBoxCocoapods/Pods-MBoxCocoapods.release.xcconfig"; sourceTree = "<group>"; };
-		AB07111425E7D29E007294A5 /* MBoxCocoapodsLoader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MBoxCocoapodsLoader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		AB07111625E7D29E007294A5 /* MBoxCocoapodsLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MBoxCocoapodsLoader.h; sourceTree = "<group>"; };
-		AB07111725E7D29E007294A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AB2D48EB23C60AB100596FEF /* MBDependencyTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MBDependencyTool.swift; sourceTree = "<group>"; };
+		AB19429D2747582F0079C7B0 /* MBDependencyTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MBDependencyTool.swift; sourceTree = "<group>"; };
 		AB3DBE9A22E859F600593F79 /* Go.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Go.swift; sourceTree = "<group>"; };
 		AB3DBEA022E86F2700593F79 /* MBWorkRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MBWorkRepo.swift; sourceTree = "<group>"; };
 		AB3DBEA222E86F5E00593F79 /* MBWorkspace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MBWorkspace.swift; sourceTree = "<group>"; };
 		AB3DBEA422E8770D00593F79 /* MBFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MBFeature.swift; sourceTree = "<group>"; };
 		AB4648AD2310698100972C12 /* PodCMD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodCMD.swift; sourceTree = "<group>"; };
 		AB49EE8A2446E1E200515D45 /* MBPodSearchEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MBPodSearchEngine.swift; sourceTree = "<group>"; };
-		AB5E306222EC885C004F716F /* Metadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metadata.swift; sourceTree = "<group>"; };
-		AB5E306822EC8BF2004F716F /* Source.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Source.swift; sourceTree = "<group>"; };
 		AB5E307422ECAB5D004F716F /* Specification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Specification.swift; sourceTree = "<group>"; };
 		AB9A5ED723827757000A24BA /* MBSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MBSetting.swift; sourceTree = "<group>"; };
 		ABA08CE4238D88FF00C5567A /* manifest.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = manifest.yml; path = ../manifest.yml; sourceTree = "<group>"; };
 		ABA08CF0238D8BB000C5567A /* Basic.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Basic.xcconfig; sourceTree = "<group>"; };
+		ABF0F58A26B94930008ADE91 /* Depend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Depend.swift; sourceTree = "<group>"; };
 		ABF5669922E58D3100421916 /* MBoxCocoapods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MBoxCocoapods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABF5669C22E58D3100421916 /* MBoxCocoapods.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MBoxCocoapods.h; sourceTree = "<group>"; };
 		ABF5669D22E58D3100421916 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -65,13 +59,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		AB07111125E7D29E007294A5 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		ABF5669622E58D3100421916 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -109,20 +96,10 @@
 			path = Feature;
 			sourceTree = "<group>";
 		};
-		AB07111525E7D29E007294A5 /* MBoxCocoapodsLoader */ = {
+		AB19429C2747582F0079C7B0 /* DependencyManager */ = {
 			isa = PBXGroup;
 			children = (
-				AB2D48EA23C60A9000596FEF /* DependencyManager */,
-				AB07111625E7D29E007294A5 /* MBoxCocoapodsLoader.h */,
-				AB07111725E7D29E007294A5 /* Info.plist */,
-			);
-			path = MBoxCocoapodsLoader;
-			sourceTree = "<group>";
-		};
-		AB2D48EA23C60A9000596FEF /* DependencyManager */ = {
-			isa = PBXGroup;
-			children = (
-				AB2D48EB23C60AB100596FEF /* MBDependencyTool.swift */,
+				AB19429D2747582F0079C7B0 /* MBDependencyTool.swift */,
 			);
 			path = DependencyManager;
 			sourceTree = "<group>";
@@ -142,19 +119,9 @@
 		AB5E306022EC883F004F716F /* CocoaPods */ = {
 			isa = PBXGroup;
 			children = (
-				AB5E306122EC884A004F716F /* Source */,
 				AB5E307422ECAB5D004F716F /* Specification.swift */,
 			);
 			path = CocoaPods;
-			sourceTree = "<group>";
-		};
-		AB5E306122EC884A004F716F /* Source */ = {
-			isa = PBXGroup;
-			children = (
-				AB5E306222EC885C004F716F /* Metadata.swift */,
-				AB5E306822EC8BF2004F716F /* Source.swift */,
-			);
-			path = Source;
 			sourceTree = "<group>";
 		};
 		ABF5668F22E58D3100421916 = {
@@ -163,7 +130,6 @@
 				ABA08CF0238D8BB000C5567A /* Basic.xcconfig */,
 				ABA08CE4238D88FF00C5567A /* manifest.yml */,
 				ABF5669B22E58D3100421916 /* MBoxCocoapods */,
-				AB07111525E7D29E007294A5 /* MBoxCocoapodsLoader */,
 				ABF5669A22E58D3100421916 /* Products */,
 				E2FCF697698F8CCC95299DD2 /* Pods */,
 				CC52AEF96B1C9389D9A235C0 /* Frameworks */,
@@ -174,7 +140,6 @@
 			isa = PBXGroup;
 			children = (
 				ABF5669922E58D3100421916 /* MBoxCocoapods.framework */,
-				AB07111425E7D29E007294A5 /* MBoxCocoapodsLoader.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -182,6 +147,7 @@
 		ABF5669B22E58D3100421916 /* MBoxCocoapods */ = {
 			isa = PBXGroup;
 			children = (
+				AB19429C2747582F0079C7B0 /* DependencyManager */,
 				5927C48C24E1803D0015EE1E /* Container */,
 				AB5E306022EC883F004F716F /* CocoaPods */,
 				AB3DBE9F22E86F1D00593F79 /* Config */,
@@ -201,6 +167,7 @@
 				597696D525174964000F57AE /* Container */,
 				ABF566B922E5CC5E00421916 /* Pod.swift */,
 				AB3DBE9A22E859F600593F79 /* Go.swift */,
+				ABF0F58A26B94930008ADE91 /* Depend.swift */,
 			);
 			path = CLI;
 			sourceTree = "<group>";
@@ -227,14 +194,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		AB07110F25E7D29E007294A5 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				AB07111825E7D29E007294A5 /* MBoxCocoapodsLoader.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		ABF5669422E58D3100421916 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -246,24 +205,6 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		AB07111325E7D29E007294A5 /* MBoxCocoapodsLoader */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = AB07111B25E7D29E007294A5 /* Build configuration list for PBXNativeTarget "MBoxCocoapodsLoader" */;
-			buildPhases = (
-				AB07110F25E7D29E007294A5 /* Headers */,
-				AB07111025E7D29E007294A5 /* Sources */,
-				AB07111125E7D29E007294A5 /* Frameworks */,
-				AB07111225E7D29E007294A5 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = MBoxCocoapodsLoader;
-			productName = MBoxCocoapodsLoader;
-			productReference = AB07111425E7D29E007294A5 /* MBoxCocoapodsLoader.framework */;
-			productType = "com.apple.product-type.framework";
-		};
 		ABF5669822E58D3100421916 /* MBoxCocoapods */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = ABF566A122E58D3100421916 /* Build configuration list for PBXNativeTarget "MBoxCocoapods" */;
@@ -272,7 +213,6 @@
 				ABF5669422E58D3100421916 /* Headers */,
 				ABF5669522E58D3100421916 /* Sources */,
 				ABF5669622E58D3100421916 /* Frameworks */,
-				AB6293C823006CE700F95DB8 /* Package Dylibs */,
 			);
 			buildRules = (
 			);
@@ -289,12 +229,9 @@
 		ABF5669022E58D3100421916 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1300;
+				LastUpgradeCheck = 1400;
 				ORGANIZATIONNAME = com.bytedance;
 				TargetAttributes = {
-					AB07111325E7D29E007294A5 = {
-						CreatedOnToolsVersion = 12.4;
-					};
 					ABF5669822E58D3100421916 = {
 						CreatedOnToolsVersion = 10.2.1;
 						LastSwiftMigration = 1020;
@@ -302,7 +239,7 @@
 				};
 			};
 			buildConfigurationList = ABF5669322E58D3100421916 /* Build configuration list for PBXProject "MBoxCocoapods" */;
-			compatibilityVersion = "Xcode 12.0";
+			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -315,20 +252,9 @@
 			projectRoot = "";
 			targets = (
 				ABF5669822E58D3100421916 /* MBoxCocoapods */,
-				AB07111325E7D29E007294A5 /* MBoxCocoapodsLoader */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXResourcesBuildPhase section */
-		AB07111225E7D29E007294A5 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		9AECEB51169AA85D2C8B1909 /* [CP] Check Pods Manifest.lock */ = {
@@ -353,56 +279,27 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		AB6293C823006CE700F95DB8 /* Package Dylibs */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
-			files = (
-			);
-			inputFileListPaths = (
-				"$(PODS_ROOT)/MBoxCore/repackage-dylibs.input.xcfilelist",
-			);
-			inputPaths = (
-			);
-			name = "Package Dylibs";
-			outputFileListPaths = (
-				"$(PODS_ROOT)/MBoxCore/repackage-dylibs.output.xcfilelist",
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = "/bin/sh -li";
-			shellScript = "export LANG=en_US.UTF-8\nexport LANGUAGE=en_US.UTF-8\nexport LC_ALL=en_US.UTF-8\nruby \"${PODS_ROOT}/MBoxCore/repackage-dylibs.rb\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		AB07111025E7D29E007294A5 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		ABF5669522E58D3100421916 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				AB3DBEA322E86F5E00593F79 /* MBWorkspace.swift in Sources */,
 				AB3DBE9B22E859F600593F79 /* Go.swift in Sources */,
-				AB5E306322EC885C004F716F /* Metadata.swift in Sources */,
 				597696D825174992000F57AE /* Switch.swift in Sources */,
 				597696DF25174A30000F57AE /* Start.swift in Sources */,
+				ABF0F58B26B94930008ADE91 /* Depend.swift in Sources */,
 				AB5E307522ECAB5D004F716F /* Specification.swift in Sources */,
 				ABF566BA22E5CC5E00421916 /* Pod.swift in Sources */,
 				5928D42925907DE10070F1A7 /* PodCMD+Container.swift in Sources */,
 				5927C48E24E180580015EE1E /* MBFeature+Container.swift in Sources */,
 				AB4648AE2310698100972C12 /* PodCMD.swift in Sources */,
-				AB2D48EC23C60AB100596FEF /* MBDependencyTool.swift in Sources */,
 				AB49EE8B2446E1E200515D45 /* MBPodSearchEngine.swift in Sources */,
 				25EEC98E24E2D03B00A965A1 /* MBWorkRepo+Container.swift in Sources */,
-				AB5E306922EC8BF2004F716F /* Source.swift in Sources */,
 				AB3DBEA522E8770D00593F79 /* MBFeature.swift in Sources */,
+				AB19429E2747582F0079C7B0 /* MBDependencyTool.swift in Sources */,
 				AB9A5ED823827757000A24BA /* MBSetting.swift in Sources */,
 				AB3DBEA122E86F2700593F79 /* MBWorkRepo.swift in Sources */,
 				ABF566BC22E5CEA600421916 /* MBoxCocoapods.swift in Sources */,
@@ -412,54 +309,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		AB07111925E7D29E007294A5 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = MBoxCocoapodsLoader/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mbox.MBoxCocoapodsLoader;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Debug;
-		};
-		AB07111A25E7D29E007294A5 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = MBoxCocoapodsLoader/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mbox.MBoxCocoapodsLoader;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
 		ABF5669F22E58D3100421916 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = ABA08CF0238D8BB000C5567A /* Basic.xcconfig */;
@@ -497,6 +346,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DYLIB_CURRENT_VERSION = "$(MARKETING_VERSION)";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -564,6 +414,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_CURRENT_VERSION = "$(MARKETING_VERSION)";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -596,6 +447,7 @@
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -626,6 +478,7 @@
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -649,15 +502,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		AB07111B25E7D29E007294A5 /* Build configuration list for PBXNativeTarget "MBoxCocoapodsLoader" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				AB07111925E7D29E007294A5 /* Debug */,
-				AB07111A25E7D29E007294A5 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		ABF5669322E58D3100421916 /* Build configuration list for PBXProject "MBoxCocoapods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

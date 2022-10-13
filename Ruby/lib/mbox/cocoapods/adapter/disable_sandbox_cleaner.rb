@@ -4,8 +4,9 @@ module Pod
     class SandboxDirCleaner
       alias_method :mbox_pod_clean!, :clean!
       def clean!
-        # 由于 Target Support Files 存在符号链接，导致路径不一致，会被误删除。
-        # 因此暂时禁用清理
+        # Because the symbol link will cause the path is different,
+        # CocoaPods will remove the `Target Support Files`.
+        # So we disable this feature.
       end
     end
   end

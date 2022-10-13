@@ -1,7 +1,7 @@
 module Pod
   class Podfile
 
-    # 暴露私有函数
+    # make public
     def mbox_install_options(installation_method)
       get_hash_value('installation_method', 'name' => installation_method, 'options' => {})
     end
